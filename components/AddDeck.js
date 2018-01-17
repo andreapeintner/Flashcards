@@ -2,7 +2,8 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
-
+import { connect } from 'react-redux'
+import { addEntry } from '../actions'
 
 function SubmitButton ({ onPress }) {
     return (
@@ -13,7 +14,7 @@ function SubmitButton ({ onPress }) {
     )
 }
 
-export default class AddDeck extends React.Component {
+class AddDeck extends React.Component {
 
     state = {
         decktitle: ''
@@ -22,13 +23,21 @@ export default class AddDeck extends React.Component {
         this.setState((state) => ({ decktitle: e}))
     }
     submit = () => {
+        const entry = this.state 
+        this.props.dispatch(addEntry({
+            [key]: entry
+        }))
+
         this.state.decktitle === '' 
         ? Alert.alert('Alert:', 'Please enter a title for your deck', [
                 {text: 'Ok', onPress: () => { return false }}
             ],
             { cancelable: true }
         )
-        : saveDeckTitle(this.state.decktitle)
+        : saveDeckTitle(this.state.decktitle).then(() => {
+            this.props.navigation.goBack();
+            this.props.navigation.navigate('DeckList');
+        })
     }
 
     render () {
@@ -100,3 +109,5 @@ const styles = StyleSheet.create({
 
     }
 })
+
+export default connect()(AddDeck)
