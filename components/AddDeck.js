@@ -23,12 +23,12 @@ class AddDeck extends React.Component {
         this.setState((state) => ({ decktitle: e}))
     }
     submit = () => {
-        const entry = this.state 
+        const entry = this.state
         this.props.dispatch(addEntry({
-            [key]: entry
+            [entry]: entry
         }))
 
-        this.state.decktitle === '' 
+        this.state.decktitle === ''
         ? Alert.alert('Alert:', 'Please enter a title for your deck', [
                 {text: 'Ok', onPress: () => { return false }}
             ],
@@ -45,9 +45,9 @@ class AddDeck extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW DECK</Text>
                 <Text style={styles.subtitle}>Enter a Title for your new Deck:</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
-                    placeholder="Title" 
+                    placeholder="Title"
                     onChangeText={(decktitle) => this.setState({decktitle})}
                 />
                 <SubmitButton onPress={this.submit}/>

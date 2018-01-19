@@ -5,17 +5,18 @@ const STORAGE_DECKS_KEY = 'flashcards:decks'
 
 export function saveDeckTitle(title) {
     console.log('saveDeckTitle', title)
-    return AsyncStorage.mergeItem(
-        STORAGE_DECKS_KEY, JSON.stringify({ [title]: title, questions: [] })
+    return AsyncStorage.setItem(
+        STORAGE_DECKS_KEY, JSON.stringify({ [title]: title })
     );
 }
 
-export function getDeck(id) {
-    console.log('getDeck', id)
+export function getDeck() {
+    console.log('getDeck')
     return AsyncStorage.getItem(STORAGE_DECKS_KEY)
-    .then(data => {JSON.parse(data)
-        return data[id]
-    })
-    return undefined;
+    .then(data => {
+        console.log('results: ', data)
+        if(!data) return {}
+        return JSON.parse(data)
+    }).catch(error => console.log(error))
+    // return undefined;
 }
-

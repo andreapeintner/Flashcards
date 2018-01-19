@@ -72,6 +72,10 @@ const MainNavigator = StackNavigator({
 
 
 export default class App extends React.Component {
+  componentDidMount() {
+    console.log('before')
+    debugger
+  }
   render() {
     return (
       <Provider store={createStore(reducer)}>
