@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'reac
 import { white, orange, gray } from '../utils/colors'
 import { saveDeckTitle } from '../utils/api'
 import { connect } from 'react-redux'
-import { addEntry } from '../actions'
+import { addDeck } from '../actions'
 
 function SubmitButton ({ onPress }) {
     return (
@@ -17,40 +17,54 @@ function SubmitButton ({ onPress }) {
 class AddDeck extends React.Component {
 
     state = {
-        decktitle: ''
+        title: ''
     }
-    handleChange = (e) => {
-        this.setState((state) => ({ decktitle: e}))
-    }
-    submit = () => {
-        const entry = this.state
-        this.props.dispatch(addEntry({
-            [entry]: entry
-        }))
 
-        this.state.decktitle === ''
-        ? Alert.alert('Alert:', 'Please enter a title for your deck', [
-                {text: 'Ok', onPress: () => { return false }}
-            ],
-            { cancelable: true }
-        )
-        : saveDeckTitle(this.state.decktitle).then(() => {
-            this.props.navigation.goBack();
-            this.props.navigation.navigate('DeckList');
-        })
+    handleTextChange = (text) => {
+        this.setState({ title: text })
     }
+
+    handleSubmit = () => {
+        console.log(this.state.title, "TITLE")
+        const { dispatch, navigation } = this.props
+        const { title } = this.state
+
+        if (!title) {
+            Alert.alert(
+            'Required data missing',
+            'Please provide a deck title before submitting.',
+            )
+            return false
+        }
+
+        const newDeck = {
+            [title]: {
+            key: title, title, cards: [], cardCount: 0,
+            },
+        }
+
+        saveDeckTitle(title).then(() => {
+            dispatch(addDeck(newDeck))
+            console.log(newDeck, "DISPATCH")
+        })
+        
+        navigation.navigate('DeckList', { title })
+    }
+    // clearQuery = () => {
+    //     this.setState({ title: '' })
+    // }
 
     render () {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW DECK</Text>
                 <Text style={styles.subtitle}>Enter a Title for your new Deck:</Text>
-                <TextInput
+                <TextInput 
                     style={styles.input}
                     placeholder="Title"
-                    onChangeText={(decktitle) => this.setState({decktitle})}
+                    onChangeText={this.handleTextChange}
                 />
-                <SubmitButton onPress={this.submit}/>
+                <SubmitButton onPress={this.handleSubmit} />
             </View>
         )
     }
@@ -109,5 +123,6 @@ const styles = StyleSheet.create({
 
     }
 })
+
 
 export default connect()(AddDeck)

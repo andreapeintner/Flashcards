@@ -11,11 +11,12 @@ import reducer from './reducer'
 
 import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'
+import DeckDetail from './components/DeckDetail';
 
 function UdaciStatusBar({ backgroundColor, ...props }) {
   return (
     <View style={{backgroundColor, height: Constants.statusBarHeight}}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} barStyle = "dark-content"/>
     </View>
   )
 }
@@ -67,22 +68,26 @@ const MainNavigator = StackNavigator({
         backgroundColor: purple,
       }
     }
+  },
+  DeckDetail: {
+    screen: DeckDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: orange,
+      }
+    }
   }
 })
 
 
 export default class App extends React.Component {
-  componentDidMount() {
-    console.log('before')
-    debugger
-  }
   render() {
     return (
       <Provider store={createStore(reducer)}>
         <View style={styles.container}>
-          <UdaciStatusBar backgroundColor={gray} barStyle='light-content' />
+          <UdaciStatusBar backgroundColor={orange} barStyle='light-content' />
           <MainNavigator />
-          {/* <AddDeck /> */}
         </View>
       </Provider>
     )
@@ -91,7 +96,6 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
       flex: 1,
-      backgroundColor: white
   },
   row: {
       flexDirection: 'row',

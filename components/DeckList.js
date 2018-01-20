@@ -2,51 +2,46 @@ import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
 import { getDeck } from '../utils/api'
-import { receiveEntries } from '../actions'
+import { receiveDecks } from '../actions'
 import { getDecksInfo } from '../utils/helpers'
 import { connect } from 'react-redux'
 
+
+function DeckListItem({ deck, navigation }) {
+    return (
+      <View style={styles.Container}>
+        <TouchableOpacity style={styles.deck}
+          onPress={() => (
+            navigation.navigate('DeckDetail', { title: deck.title }))}
+        >
+          <Text style={styles.listItemText}>{deck.title}</Text>
+          <Text style={styles.listItemText}>{`${deck.cardCount} cards`}</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
 class DeckList extends React.Component {
 
-
-
-
-
-    async componentDidMount() {
-        console.log('Decklist')
-        try {
-            const entries = await getDeck();
-            this.props.dispatch(receiveEntries(entries))
-        }
-        catch(error) {
-            console.log(error, 'ERROR')
-        }
+    componentDidMount() {
+        console.log(this.state, 'state')
+        getDeck().then(decks => (
+            this.props.dispatch(receiveDecks(JSON.parse(decks)))));
     }
-    _renderItem = (item) => {
-        console.log('DeckList _renderItem item: ', item.item, index)
-        const entry = item.item
-        const { index } = item
-        return (
-            <View>
-                {}
-                <Text style={styles.deckHeader} key={index}>{entry}</Text>
-                {/* <Text style={styles.deckSubHeader}>{entry.length}</Text> */}
-            </View>
-        );
-    }
-    _keyExtractor = (item, index) => index;
+
 
 
     render () {
-        const { entries } = this.props
-        console.log(entries)
+        const { decks, navigation } = this.props
+        console.log(decks, 'DECKSSSSS')
         return (
             <View style={styles.container}>
-                <Text>DeckList</Text>
+                <Text style={styles.title}>DeckList</Text>
                 <FlatList
-                data={entries}
-                renderItem={this._renderItem}
-                keyExtractor={this._keyExtractor}
+                data={decks}
+                renderItem={({ item }) => (
+                    <DeckListItem deck={item} navigation={navigation} />
+                )}
             />
             </View>
         )
@@ -54,12 +49,41 @@ class DeckList extends React.Component {
 }
 
 const styles=StyleSheet.create({
-
+    container: {
+        flex: 1,
+        paddingTop: 40,
+        backgroundColor: orange
+    },
+    row: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center'
+    },
+    title: {
+        textAlign:'center',
+        fontSize: 22,
+        padding: 20,
+        
+    },
+    deck: {
+        padding:20,
+        margin: 10,
+        borderColor: gray,
+        borderRadius: 7,
+        borderWidth: 1,
+        textAlign: 'center',
+        backgroundColor: white
+    }
 })
-function mapStateToProps(entries) {
-    console.log('mapstatetoprops', entries)
+
+// const mapStateToProps = (state) => {
+//     const decks = Object.keys(state.decks).map(id => state.decks[id]);
+//     return { decks };
+//   }
+function mapStateToProps(decks) {
+    console.log('mapstatetoprops', decks)
     return {
-        entries: Object.values(entries)
+        decks: Object.values(decks)
     }
 }
 

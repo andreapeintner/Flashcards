@@ -9,12 +9,6 @@
     "icon": "",
     "notification": {
       "icon": ""
-    },
-    "ios": {
-      "bundleIdentifier": ""
-    },
-    "android": {
-      "package": ""
     }
   }
 }
