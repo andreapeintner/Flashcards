@@ -14,7 +14,7 @@ function SubmitButton ({ onPress }) {
     )
 }
 
-function DeckDetails(props) {
+function DeckDetail(props) {
     const { navigation } = props;
     const { title, cardCount } = props.deck || {};
   
@@ -44,11 +44,24 @@ function DeckDetails(props) {
       </View>
     );
   }
+//   const mapStateToProps = (state) => {
+//     const decks = Object.keys(state.decks).map(id => state.decks[id]);
+//     return { decks };
+//   };
   
+//   function mapStateToProps(decks, ownProps) {
+//     return {
+//         decks: Object.values(decks.params.title)
+//     }
+// }
+
+const mapStateToProps = (state, ownProps) => {
+    console.log(ownProps, state ,'!!!!')
+    return { 
+        deck: ownProps.navigation.state.params.title
+    }
+  }
+
+
   
-  const mapStateToProps = (state, ownProps) => {
-    const deck = state.decks[ownProps.navigation.state.params.title];
-    return { deck };
-  };
-  
-  export default connect(mapStateToProps)(DeckDetails);
+  export default connect(mapStateToProps)(DeckDetail);
