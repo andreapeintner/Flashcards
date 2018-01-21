@@ -12,7 +12,7 @@ function DeckListItem({ deck, navigation }) {
       <View style={styles.Container}>
         <TouchableOpacity style={styles.deck}
           onPress={() => (
-            navigation.navigate('DeckDetail', { title: deck.title }))}
+            navigation.navigate('DeckDetail', { title: deck.title, cardCount: deck.cardCount }))}
         >
           <Text style={styles.listItemText}>{deck.title}</Text>
           <Text style={styles.listItemText}>{`${deck.cardCount} cards`}</Text>
@@ -24,7 +24,6 @@ function DeckListItem({ deck, navigation }) {
 class DeckList extends React.Component {
 
     componentDidMount() {
-        console.log(this.state, 'state')
         getDeck().then(decks => (
             this.props.dispatch(receiveDecks(JSON.parse(decks)))));
     }
@@ -33,7 +32,7 @@ class DeckList extends React.Component {
 
     render () {
         const { decks, navigation } = this.props
-        console.log(decks, 'DECKSSSSS')
+        console.log(decks, navigation, 'DECKSSSSS')
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>DeckList</Text>
@@ -76,10 +75,7 @@ const styles=StyleSheet.create({
     }
 })
 
-// const mapStateToProps = (state) => {
-//     const decks = Object.keys(state.decks).map(id => state.decks[id]);
-//     return { decks };
-//   }
+
 function mapStateToProps(decks) {
     console.log('mapstatetoprops', decks)
     return {

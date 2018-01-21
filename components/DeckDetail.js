@@ -1,9 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { white, orange, gray } from '../utils/colors'
-import { saveDeckTitle } from '../utils/api'
+import { white, orange, gray, lightPurp } from '../utils/colors'
+import { saveDeckTitle, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
+
+import PropTypes from 'prop-types'
+
 
 function SubmitButton ({ onPress }) {
     return (
@@ -15,50 +18,78 @@ function SubmitButton ({ onPress }) {
 }
 
 function DeckDetail(props) {
-    const { navigation } = props;
-    const { title, cardCount } = props.deck || {};
+    console.log(props, "DETAIL")
+    const { navigation, decktitle, cardCount } = props;
   
     return (
       <View>
-        <Text >{title}</Text>
-        <Text>
+        <Text style={styles.title}>{decktitle}</Text>
+        <Text style={styles.subtitle}>
           {`${cardCount} cards`}
         </Text>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('NewCard', { title })}
+        <TouchableOpacity style={styles.Btn}
+          onPress={() => navigation.navigate('AddCard', { decktitle })}
         >
-          <Text>Add Card</Text>
+          <Text style={styles.BtnText}>Add Card</Text>
         </TouchableOpacity>
-        {
-          cardCount !== 0 &&
-            <TouchableOpacity
+        {/* {
+          cardCount === 0 && */}
+            <TouchableOpacity style={styles.Btn}
               onPress={() => {
                 // Reset notification since a quiz was started
                 clearNotification().then(setNotification);
-                navigation.navigate('Quiz', { title });
+                navigation.navigate('StartQuiz', { decktitle });
               }}
             >
-              <Text>Start Quiz</Text>
+              <Text style={styles.BtnText}>Start Quiz</Text>
             </TouchableOpacity>
-        }
+        {/* } */}
       </View>
     );
   }
-//   const mapStateToProps = (state) => {
-//     const decks = Object.keys(state.decks).map(id => state.decks[id]);
-//     return { decks };
-//   };
-  
-//   function mapStateToProps(decks, ownProps) {
-//     return {
-//         decks: Object.values(decks.params.title)
-//     }
-// }
+
+const styles=StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: 40,
+        backgroundColor: orange
+    },
+    row: {
+        flexDirection: 'row',
+        flex: 1,
+        alignItems: 'center'
+    },
+    title: {
+        textAlign:'center',
+        fontSize: 22,
+        padding: 20,
+        
+    },
+    subtitle: {
+        paddingTop: 40,
+        paddingBottom: 20,
+        fontSize: 18,
+        textAlign: 'center'
+    },
+    Btn: {
+        backgroundColor: lightPurp,
+        padding: 5,
+        borderRadius: 7,
+        height: 45,
+        margin: 50
+    },
+    BtnText: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center'
+    },
+})
 
 const mapStateToProps = (state, ownProps) => {
-    console.log(ownProps, state ,'!!!!')
+    console.log(ownProps, state, '!!!!')
     return { 
-        deck: ownProps.navigation.state.params.title
+        decktitle: ownProps.navigation.state.params.title,
+        cardCount: ownProps.navigation.state.params.cardCount
     }
   }
 

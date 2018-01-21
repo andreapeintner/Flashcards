@@ -5,11 +5,11 @@ const STORAGE_DECKS_KEY = 'flashcards:decks'
 
 export function saveDeckTitle(title) {
     console.log('ACTION_SaveTitle', title)
-    const deck = {
-        key: title, title, cardCount: 0, cards: [],
-    }
+    // const deck = {
+    //     key: title, title, cardCount: 0, cards: [],
+    // }
     return AsyncStorage.mergeItem(
-        STORAGE_DECKS_KEY, JSON.stringify({ [title]: deck })
+        STORAGE_DECKS_KEY, JSON.stringify({ [title]: {title, title, cardCount: 0, cards: []} })
     );
 }
 
@@ -22,4 +22,17 @@ export function getDeck() {
     //     return JSON.parse(data)
     // }).catch(error => console.log(error))
     // return undefined;
+}
+
+export function addCardToDeck(title, card) {
+    console.log('addCardToDeck')
+    return AsyncStorage.getItem(STORAGE_DECKS_KEY => {
+        const { cardCount, cards } = JSON.parse(decks)[title]
+
+        cards.push(card)
+
+        return AsyncStorage.mergeItem(
+            STORAGE_DECKS_KEY, JSON.stringify({ [title]: {cards, cardCount: cardCount + 1} })
+        )
+    })
 }
