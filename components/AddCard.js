@@ -32,7 +32,7 @@ class AddCard extends React.Component {
 
     handleSubmit = () => {
         console.log(this.state, this.props, "Q+A")
-        const { dispatch, navigation } = this.props
+        const { dispatch, navigation, title, card } = this.props
         const { question, answer } = this.state
         const { decktitle } = this.props.navigation.state.params
 
@@ -46,17 +46,18 @@ class AddCard extends React.Component {
                 'Required data missing',
                 'Please provide an answer before submitting.',
             )
-        } return false
+        } else {
+            console.log('next')
+            const newCard = { question, answer }
 
-        const newCard = { question, answer }
+            addCardToDeck(title, card).then(() => {
+                dispatch(addCardToDeck(title, newCard))
+                console.log(newCard, "DISPATCH")
+            })
 
-        addCardToDeck(title, card).then(() => {
-            dispatch(addCardToDeck(decktitle, newCard))
-            console.log(newCard, "DISPATCH")
-        })
-        
-        navigation.navigate('DeckDetail', { decktitle })
+            navigation.navigate('DeckDetail', { decktitle })
     }
+        }
     // clearQuery = () => {
     //     this.setState({ title: '' })
     // }
@@ -66,13 +67,13 @@ class AddCard extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW CARD</Text>
                 <Text style={styles.subtitle}>Enter a question</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     placeholder="Question"
                     onChangeText={this.changeQuestion}
                 />
                 <Text style={styles.subtitle}>Enter the answer</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     placeholder="Answer"
                     onChangeText={this.changeAnswer}

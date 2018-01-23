@@ -39,7 +39,7 @@ class DeckList extends React.Component {
                 <FlatList
                 data={decks}
                 renderItem={({ item }) => (
-                    <DeckListItem deck={item} navigation={navigation} />
+                    <DeckListItem key={item} deck={item} navigation={navigation} />
                 )}
             />
             </View>
@@ -62,7 +62,7 @@ const styles=StyleSheet.create({
         textAlign:'center',
         fontSize: 22,
         padding: 20,
-        
+
     },
     deck: {
         padding:20,
@@ -70,7 +70,6 @@ const styles=StyleSheet.create({
         borderColor: gray,
         borderRadius: 7,
         borderWidth: 1,
-        textAlign: 'center',
         backgroundColor: white
     }
 })
