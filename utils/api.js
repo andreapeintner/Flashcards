@@ -24,16 +24,19 @@ export function getDeck() {
     // return undefined;
 }
 
-export function addCardToDeck(title, card) {
-    console.log('addCardToDeck', title, card)
-    return AsyncStorage.getItem(STORAGE_DECKS_KEY => {
-        const { cardCount, cards } = JSON.parse(decks)[title]
-
-        cards.push(card)
-
-        return AsyncStorage.mergeItem(
-            STORAGE_DECKS_KEY, JSON.stringify({ [title]: {cards, cardCount: cardCount + 1} })
-        )
-    })
-    console.log(state)
+export function addCardToDeck(deck) {
+    return AsyncStorage.mergeItem(STORAGE_DECKS_KEY)
 }
+
+// export function addCardToDeck(title, card) {
+//     console.log('addCardToDeck', title, card)
+//     return AsyncStorage.getItem(STORAGE_DECKS_KEY => {
+//         const { cardCount, cards } = JSON.parse(decks)[title]
+
+//         cards.push(card)
+//         console.log(state, "XXXXX")
+//         return AsyncStorage.mergeItem(
+//             STORAGE_DECKS_KEY, JSON.stringify({ [title]: {card, cardCount: cardCount + 1} })
+//         )
+//     })
+// }

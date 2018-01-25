@@ -21,20 +21,20 @@ class AddCard extends React.Component {
         answer: ''
     }
 
-    changeQuestion = (text) => {
-        this.setState({ question: text })
+    changeQuestion = (question) => {
+        this.setState({ question })
     }
 
-    changeAnswer = (text) => {
-        this.setState({ answer: text })
+    changeAnswer = (answer) => {
+        this.setState({ answer })
     }
 
 
     handleSubmit = () => {
         console.log(this.state, this.props, "Q+A")
-        const { dispatch, navigation, title, card } = this.props
+        const { dispatch, navigation } = this.props
         const { question, answer } = this.state
-        const { decktitle } = this.props.navigation.state.params
+        const { deck } = navigation.state.params
 
         if (!question) {
             Alert.alert(
@@ -48,14 +48,25 @@ class AddCard extends React.Component {
             )
         } else {
             console.log('next')
-            const newCard = { question, answer }
+            // const newCard = { question, answer }
 
-            addCardToDeck(title, card).then(() => {
-                dispatch(addCardToDeck(title, newCard))
-                console.log(newCard, "DISPATCH")
-            })
+            // addCardToDeck(title, card).then(() => {
+            //     dispatch(addCardToDeck(title, newCard))
+            //     console.log(newCard, "DISPATCH")
+            // })
+            const newCard = {
+                [deck.title]: {
+                  title: deck.title,
+                  questions: [...deck.questions, { question, answer }]
+                }
+              };
+            dispatch(addCardToDeck(newCard))
+            // const newCard = { question, answer };
+            // addCardToDeck(title, newCard).then(() => {
+            //     return dispatch(addCard(title, card))
+            // });
 
-            navigation.navigate('DeckDetail', { decktitle })
+            navigation.goBack();
     }
         }
     // clearQuery = () => {
