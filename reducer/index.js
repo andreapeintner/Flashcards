@@ -12,6 +12,7 @@ function decks(state = {}, action) {
                 ...state,
                 ...action.deck
             }
+<<<<<<< HEAD
         case ADD_CARD:
             return {
                 ...state,
@@ -23,6 +24,22 @@ function decks(state = {}, action) {
                     ],
                     cardCount: state[action.deck.title].cardCount + 1
                 }
+=======
+        // case ADD_CARD: {
+        //     const { title, card } = action;
+        //     return {
+        //         ...state,
+        //         [title]: {
+        //         ...state[title],
+        //         cards: [...state[title].cards, card],
+        //         cardCount: state[title].cardCount + 1,
+        //         },
+        //     }
+        case ADD_CARD :
+            return {
+                ...state,
+                ...action.deck
+>>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26
             }
         // case ADD_CARD :
         //     const {title, card} = action

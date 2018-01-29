@@ -22,12 +22,17 @@ class AddCard extends React.Component {
         answer: ''
     }
 
+<<<<<<< HEAD
     changeQuestion = (text) => {
          this.setState({ question: text })
+=======
+    changeQuestion = (question) => {
+        this.setState({ question })
+>>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26
     }
 
-    changeAnswer = (text) => {
-        this.setState({ answer: text })
+    changeAnswer = (answer) => {
+        this.setState({ answer })
     }
 
     handleSubmit = () => {
@@ -90,13 +95,13 @@ class AddCard extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW CARD</Text>
                 <Text style={styles.subtitle}>Enter a question</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     placeholder="Question"
                     onChangeText={this.changeQuestion}
                 />
                 <Text style={styles.subtitle}>Enter the answer</Text>
-                <TextInput 
+                <TextInput
                     style={styles.input}
                     placeholder="Answer"
                     onChangeText={this.changeAnswer}
@@ -173,4 +178,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 
+<<<<<<< HEAD
 export default connect(mapStateToProps, {addCard})(AddCard)
+=======
+export default connect()(AddCard)
+>>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26
