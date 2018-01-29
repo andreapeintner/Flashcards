@@ -1,9 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
-import { addCardToDeck } from '../utils/api'
+import { addCardToDeck, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
-import { addCard } from '../actions'
+import { addCard, receiveDecks } from '../actions'
 
 function SubmitButton ({ onPress }) {
     return (
@@ -17,51 +17,75 @@ function SubmitButton ({ onPress }) {
 class AddCard extends React.Component {
 
     state = {
+        // title: this.props.navigation.state.params.decktitle,
         question: '',
         answer: ''
     }
 
     changeQuestion = (text) => {
-        this.setState({ question: text })
+         this.setState({ question: text })
     }
 
     changeAnswer = (text) => {
         this.setState({ answer: text })
     }
 
-
     handleSubmit = () => {
-        console.log(this.state, this.props, "Q+A")
-        const { dispatch, navigation } = this.props
         const { question, answer } = this.state
-        const { decktitle } = this.props.navigation.state.params
+        const { deck, navigation } = this.props
 
-        if (!question) {
+        const card = { question: question, answer: answer }
+
+
+        // console.log('handlesubmmitcard')
+
+        // console.log(this.props, 'PROPS')
+        // console.log(this.state, "STATE")
+
+        //console.log(this.props.navigation.state.params.decktitle, "title dude") // key of deck
+        
+        // const { dispatch, navigation } = this.props
+        // const { question, answer } = this.state
+        // const { title } = navigation.state.params
+        // const { decktitle } = this.props.navigation.state.params.decktitle
+        //const { deck } = mapStateToProps(this.props.navigation.state.params.decktitle)
+    
+        // console.log(deck, "the deck k/v in handlesubmit")
+        // console.log(Object.values(deck)[0], "the deck v in handlesubmit")
+
+        if(!question) {
             Alert.alert(
-                'Required data missing',
-                'Please provide a question before submitting.',
+                "You didn't enter a question",
+                "Please fill in your question"
             )
         } else if (!answer) {
             Alert.alert(
-                'Required data missing',
-                'Please provide an answer before submitting.',
+                "You didn't enter the answer",
+                "Please fill in the answer"
             )
-        } return false
+        } else {
+            addCardToDeck(deck, card).then(this.props.addCard(deck, card));
 
-        const newCard = { question, answer }
+            console.log(this.state, 'STTAE add card')
+            console.log(this.props, 'PROPS add card')
 
-        addCardToDeck(title, card).then(() => {
-            dispatch(addCardToDeck(decktitle, newCard))
-            console.log(newCard, "DISPATCH")
-        })
-        
-        navigation.navigate('DeckDetail', { decktitle })
+            // const newCard = { question, answer }
+            
+            // Object.values(deck)[0].cards.push(newCard)
+            // console.log(Object.values(deck)[0], "ss")
+
+            // const mydeck = Object.values(deck)[0]
+            
+            // const STORAGE_DECKS_KEY = 'flashcards:decks'
+            // AsyncStorage.mergeItem(
+            //     STORAGE_DECKS_KEY, JSON.stringify({ [title]: { mydeck } })
+            // )
+            // navigation.goBack()
+        }
     }
-    // clearQuery = () => {
-    //     this.setState({ title: '' })
-    // }
 
     render () {
+
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW CARD</Text>
@@ -137,5 +161,16 @@ const styles = StyleSheet.create({
     }
 })
 
+function mapStateToProps(state, ownProps) {
+    // console.log(ownProps.navigation.state.params, 'ownstate')
+    // console.log(state, 'state in AddCard#mapStateToProps')
+    // console.log(ownProps, "ownProps in AddCard#mapStateToProps")
+    // deck = state
+    const { deck } = ownProps.navigation.state.params
 
-export default connect()(AddCard)
+    return { deck: state[deck] }
+    
+}
+
+
+export default connect(mapStateToProps, {addCard})(AddCard)

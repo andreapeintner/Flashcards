@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
-import { saveDeckTitle } from '../utils/api'
+import { saveDeckTitle, createDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 
@@ -25,8 +25,7 @@ class AddDeck extends React.Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state.title, "TITLE")
-        const { dispatch, navigation } = this.props
+        const { dispatch, navigation, decks } = this.props
         const { title } = this.state
 
         if (!title) {
@@ -39,16 +38,21 @@ class AddDeck extends React.Component {
 
         const newDeck = {
             [title]: {
-            key: title, title, cards: [], cardCount: 0,
+                title: title,
+                cards: [null],
+                cardCount: 0
             },
         }
 
-        saveDeckTitle(title).then(() => {
-            dispatch(addDeck(newDeck))
-            console.log(newDeck, "DISPATCH")
-        })
+        createDeck(newDeck).then(this.props.addDeck(newDeck))
+
+        // saveDeckTitle(title).then(() => {
+        //     dispatch(addDeck(newDeck))
+        //     console.log(newDeck, "DISPATCH")
+        // })
         
-        navigation.navigate('DeckList', { title })
+        navigation.navigate('DeckList', {key: title})
+        this.setState({ title: ' ' })
     }
     // clearQuery = () => {
     //     this.setState({ title: '' })
@@ -62,6 +66,7 @@ class AddDeck extends React.Component {
                 <TextInput 
                     style={styles.input}
                     placeholder="Title"
+                    value={this.state.title}
                     onChangeText={this.handleTextChange}
                 />
                 <SubmitButton onPress={this.handleSubmit} />
@@ -124,5 +129,9 @@ const styles = StyleSheet.create({
     }
 })
 
+const mapStateToProps = state => {
+    console.log(state, 'ADD DECK    ')
+    return { decks: state }
+}
 
-export default connect()(AddDeck)
+export default connect(mapStateToProps, {addDeck})(AddDeck)

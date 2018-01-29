@@ -14,10 +14,10 @@ export function addDeck (deck) {
         deck
     }
 }
-export function addCard (title, card) {
+export function addCard (card, deck) {
     return {
-        type: ADD_DECK,
-        title,
-        card
+        type: ADD_CARD,
+        card,
+        deck
     }
 }

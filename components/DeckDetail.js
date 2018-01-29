@@ -5,8 +5,6 @@ import { saveDeckTitle, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 
-import PropTypes from 'prop-types'
-
 
 function SubmitButton ({ onPress }) {
     return (
@@ -19,16 +17,16 @@ function SubmitButton ({ onPress }) {
 
 function DeckDetail(props) {
     console.log(props, "DETAIL")
-    const { navigation, decktitle, cardCount } = props;
-  
+    const { navigation, deck, cardCount } = props;
+    console.log(deck, '???')
     return (
       <View>
-        <Text style={styles.title}>{decktitle}</Text>
+        <Text style={styles.title}>{deck.title}</Text>
         <Text style={styles.subtitle}>
-          {`${cardCount} cards`}
+          {`${deck.cardCount} cards`}
         </Text>
         <TouchableOpacity style={styles.Btn}
-          onPress={() => navigation.navigate('AddCard', { decktitle })}
+          onPress={() => navigation.navigate('AddCard', { key: deck.title })}
         >
           <Text style={styles.BtnText}>Add Card</Text>
         </TouchableOpacity>
@@ -38,7 +36,7 @@ function DeckDetail(props) {
               onPress={() => {
                 // Reset notification since a quiz was started
                 clearNotification().then(setNotification);
-                navigation.navigate('StartQuiz', { decktitle });
+                navigation.navigate('StartQuiz', { key: deck.title });
               }}
             >
               <Text style={styles.BtnText}>Start Quiz</Text>
@@ -85,14 +83,19 @@ const styles=StyleSheet.create({
     },
 })
 
-const mapStateToProps = (state, ownProps) => {
-    console.log(ownProps, state, '!!!!')
-    return { 
-        decktitle: ownProps.navigation.state.params.title,
-        cardCount: ownProps.navigation.state.params.cardCount
-    }
-  }
+// const mapStateToProps = (state, ownProps) => {
+//     console.log(ownProps, '!!!!')
+//     return { 
+//         decktitle: ownProps.navigation.state.params.title,
+//         cardCount: ownProps.navigation.state.params.cardCount
+//     }
+//   }
 
-
+  const mapStateToProps = (state, ownProps) => {
+    const { key } = ownProps.navigation.state.params
   
-  export default connect(mapStateToProps)(DeckDetail);
+    return { deck: state[key] }
+    console.log(deck, 'DECK!!!!')
+  }
+  
+  export default connect(mapStateToProps)(DeckDetail)

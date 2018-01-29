@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList, Button } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
 import { getDeck } from '../utils/api'
 import { receiveDecks } from '../actions'
@@ -7,40 +7,52 @@ import { getDecksInfo } from '../utils/helpers'
 import { connect } from 'react-redux'
 
 
-function DeckListItem({ deck, navigation }) {
-    return (
-      <View style={styles.Container}>
-        <TouchableOpacity style={styles.deck}
-          onPress={() => (
-            navigation.navigate('DeckDetail', { title: deck.title, cardCount: deck.cardCount }))}
-        >
-          <Text style={styles.listItemText}>{deck.title}</Text>
-          <Text style={styles.listItemText}>{`${deck.cardCount} cards`}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+// function DeckListItem({ item, navigation }) {
+//     return (
+//       <View style={styles.Container}>
+//         <TouchableOpacity style={styles.deck}
+//           onPress={() => (
+//             navigation.navigate('DeckDetail', { key: item.title }))}
+//         >
+//           <Text style={styles.listItemText}>{item.title}</Text>
+//           <Text style={styles.listItemText}>{`${item.cardCount} cards`}</Text>
+//         </TouchableOpacity>
+//       </View>
+//     )
+//   }
 
 class DeckList extends React.Component {
-
+    
     componentDidMount() {
         getDeck().then(decks => (
-            this.props.dispatch(receiveDecks(JSON.parse(decks)))));
+            this.props.receiveDecks(decks)))
     }
-
-
-
+    
+    renderItem = ({ item }) => {
+        const { navigation } = this.props
+        return (
+            <View style={styles.Container}>
+              <TouchableOpacity style={styles.deck}
+                onPress={() => (
+                  navigation.navigate('DeckDetail', { key: item.title }))}
+              >
+                <Text style={styles.listItemText}>{item.title}</Text>
+                <Text style={styles.listItemText}>{`${item.cardCount} cards`}</Text>
+              </TouchableOpacity>
+            </View>
+          )
+    }
     render () {
         const { decks, navigation } = this.props
-        console.log(decks, navigation, 'DECKSSSSS')
+        console.log(decks, 'DECKSSSSS')
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>DeckList</Text>
                 <FlatList
-                data={decks}
-                renderItem={({ item }) => (
-                    <DeckListItem deck={item} navigation={navigation} />
-                )}
+                    data={Object.values(decks)}
+                    renderItem={this.renderItem}
+                    keyExtractor={item => item.title}
+                    ListFooterComponent={this.renderFooter}
             />
             </View>
         )
@@ -76,11 +88,17 @@ const styles=StyleSheet.create({
 })
 
 
-function mapStateToProps(decks) {
-    console.log('mapstatetoprops', decks)
-    return {
-        decks: Object.values(decks)
-    }
+// function mapStateToProps(decks) {
+//     console.log('mapstatetoprops', decks, state)
+//     return {
+//         decks: Object.values(decks)
+//     }
+// }
+
+const mapStateToProps = state => {
+    console.log(state, 'STATE LIST')
+    return { decks: state }
+    console.log(decks, 'STATE2')
 }
 
-export default connect(mapStateToProps)(DeckList)
+export default connect(mapStateToProps, {receiveDecks})(DeckList)
