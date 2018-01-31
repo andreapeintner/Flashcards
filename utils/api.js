@@ -18,7 +18,6 @@ export const getDeck = () => {
     return AsyncStorage.getItem(STORAGE_DECKS_KEY).then(decks => JSON.parse(decks))
 }
 
-<<<<<<< HEAD
 export const createDeck = deck =>
   AsyncStorage.mergeItem(STORAGE_DECKS_KEY, JSON.stringify(deck))
 // export function getDeckForTitle( title ) {
@@ -55,21 +54,3 @@ export const addCardToDeck = (deck, card) => {
         STORAGE_DECKS_KEY, JSON.stringify({[deck.title]: { cards: updCards }})
       )
 }
-=======
-export function addCardToDeck(deck) {
-    return AsyncStorage.mergeItem(STORAGE_DECKS_KEY)
-}
-
-// export function addCardToDeck(title, card) {
-//     console.log('addCardToDeck', title, card)
-//     return AsyncStorage.getItem(STORAGE_DECKS_KEY => {
-//         const { cardCount, cards } = JSON.parse(decks)[title]
-
-//         cards.push(card)
-//         console.log(state, "XXXXX")
-//         return AsyncStorage.mergeItem(
-//             STORAGE_DECKS_KEY, JSON.stringify({ [title]: {card, cardCount: cardCount + 1} })
-//         )
-//     })
-// }
->>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26

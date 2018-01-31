@@ -22,13 +22,8 @@ class AddCard extends React.Component {
         answer: ''
     }
 
-<<<<<<< HEAD
-    changeQuestion = (text) => {
-         this.setState({ question: text })
-=======
     changeQuestion = (question) => {
         this.setState({ question })
->>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26
     }
 
     changeAnswer = (answer) => {
@@ -178,8 +173,4 @@ function mapStateToProps(state, ownProps) {
 }
 
 
-<<<<<<< HEAD
 export default connect(mapStateToProps, {addCard})(AddCard)
-=======
-export default connect()(AddCard)
->>>>>>> 8152f143face5e681ee82d7a00d3e022d0e59a26
