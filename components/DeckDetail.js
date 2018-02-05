@@ -17,13 +17,14 @@ function SubmitButton ({ onPress }) {
 
 function DeckDetail(props) {
     console.log(props, "DETAIL")
-    const { navigation, deck, cardCount } = props;
+    const { navigation, deck, cards } = props;
+    const cardCount = deck.cards.length;
     console.log(deck, '???')
     return (
       <View>
         <Text style={styles.title}>{deck.title}</Text>
         <Text style={styles.subtitle}>
-          {`${deck.cardCount} cards`}
+          {`${cardCount} cards`}
         </Text>
         <TouchableOpacity style={styles.Btn}
           onPress={() => navigation.navigate('AddCard', { key: deck.title })}
@@ -93,9 +94,9 @@ const styles=StyleSheet.create({
 
   const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
-  
+    console.log(state[key], 'DECK!!!!')
     return { deck: state[key] }
-    console.log(deck, 'DECK!!!!')
+    
   }
   
   export default connect(mapStateToProps)(DeckDetail)

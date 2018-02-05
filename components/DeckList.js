@@ -1,25 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList, Button } from 'react-native'
 import { white, orange, gray } from '../utils/colors'
-import { getDeck } from '../utils/api'
+import { getDeck, resetDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { getDecksInfo } from '../utils/helpers'
 import { connect } from 'react-redux'
 
 
-// function DeckListItem({ item, navigation }) {
-//     return (
-//       <View style={styles.Container}>
-//         <TouchableOpacity style={styles.deck}
-//           onPress={() => (
-//             navigation.navigate('DeckDetail', { key: item.title }))}
-//         >
-//           <Text style={styles.listItemText}>{item.title}</Text>
-//           <Text style={styles.listItemText}>{`${item.cardCount} cards`}</Text>
-//         </TouchableOpacity>
-//       </View>
-//     )
-//   }
 
 class DeckList extends React.Component {
     
@@ -27,8 +14,15 @@ class DeckList extends React.Component {
         getDeck().then(decks => (
             this.props.receiveDecks(decks)))
     }
-    
+
+    resetSubmit = () => {
+        resetDecks();
+        getDeck().then(decks => this.props.receiveDecks(decks));
+    }
+
     renderItem = ({ item }) => {
+        // console.log(item.cards.length, "cards -length")
+        //const cardCount = item.cards.length
         const { navigation } = this.props
         return (
             <View style={styles.Container}>
@@ -37,7 +31,7 @@ class DeckList extends React.Component {
                   navigation.navigate('DeckDetail', { key: item.title }))}
               >
                 <Text style={styles.listItemText}>{item.title}</Text>
-                <Text style={styles.listItemText}>{`${item.cardCount} cards`}</Text>
+                {/* <Text style={styles.listItemText}>{`${cardCount} cards`}</Text> */}
               </TouchableOpacity>
             </View>
           )
@@ -53,7 +47,8 @@ class DeckList extends React.Component {
                     renderItem={this.renderItem}
                     keyExtractor={item => item.title}
                     ListFooterComponent={this.renderFooter}
-            />
+                />
+                <Button title="Reset Sample Data" onPress={() => this.resetSubmit()} />
             </View>
         )
     }
@@ -87,17 +82,10 @@ const styles=StyleSheet.create({
 })
 
 
-// function mapStateToProps(decks) {
-//     console.log('mapstatetoprops', decks, state)
-//     return {
-//         decks: Object.values(decks)
-//     }
-// }
-
 const mapStateToProps = state => {
-    console.log(state, 'STATE LIST')
-    return { decks: state }
-    console.log(decks, 'STATE2')
+    return { 
+        decks: state 
+    }
 }
 
 export default connect(mapStateToProps, {receiveDecks})(DeckList)

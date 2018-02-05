@@ -31,27 +31,12 @@ class AddCard extends React.Component {
     }
 
     handleSubmit = () => {
+        
         const { question, answer } = this.state
         const { deck, navigation } = this.props
-
+        console.log(deck, 'UFFFFaaaaa')
         const card = { question: question, answer: answer }
 
-
-        // console.log('handlesubmmitcard')
-
-        // console.log(this.props, 'PROPS')
-        // console.log(this.state, "STATE")
-
-        //console.log(this.props.navigation.state.params.decktitle, "title dude") // key of deck
-        
-        // const { dispatch, navigation } = this.props
-        // const { question, answer } = this.state
-        // const { title } = navigation.state.params
-        // const { decktitle } = this.props.navigation.state.params.decktitle
-        //const { deck } = mapStateToProps(this.props.navigation.state.params.decktitle)
-    
-        // console.log(deck, "the deck k/v in handlesubmit")
-        // console.log(Object.values(deck)[0], "the deck v in handlesubmit")
 
         if(!question) {
             Alert.alert(
@@ -64,23 +49,11 @@ class AddCard extends React.Component {
                 "Please fill in the answer"
             )
         } else {
+            console.log(deck, card, 'STTAE add card')
             addCardToDeck(deck, card).then(this.props.addCard(deck, card));
-
-            console.log(this.state, 'STTAE add card')
-            console.log(this.props, 'PROPS add card')
-
-            // const newCard = { question, answer }
             
-            // Object.values(deck)[0].cards.push(newCard)
-            // console.log(Object.values(deck)[0], "ss")
-
-            // const mydeck = Object.values(deck)[0]
-            
-            // const STORAGE_DECKS_KEY = 'flashcards:decks'
-            // AsyncStorage.mergeItem(
-            //     STORAGE_DECKS_KEY, JSON.stringify({ [title]: { mydeck } })
-            // )
-            // navigation.goBack()
+            // TODO: navigate to quiz view??
+            navigation.goBack()
         }
     }
 
@@ -160,17 +133,11 @@ const styles = StyleSheet.create({
 
     }
 })
-
-function mapStateToProps(state, ownProps) {
-    // console.log(ownProps.navigation.state.params, 'ownstate')
-    // console.log(state, 'state in AddCard#mapStateToProps')
-    // console.log(ownProps, "ownProps in AddCard#mapStateToProps")
-    // deck = state
-    const { deck } = ownProps.navigation.state.params
-
-    return { deck: state[deck] }
+const mapStateToProps = (state, ownProps) => {
+    const { key } = ownProps.navigation.state.params
+    return { deck: state[key] }
     
-}
+  }
 
 
 export default connect(mapStateToProps, {addCard})(AddCard)

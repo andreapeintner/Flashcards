@@ -39,24 +39,15 @@ class AddDeck extends React.Component {
         const newDeck = {
             [title]: {
                 title: title,
-                cards: [null],
-                cardCount: 0
+                cards: [],
             },
         }
 
         createDeck(newDeck).then(this.props.addDeck(newDeck))
-
-        // saveDeckTitle(title).then(() => {
-        //     dispatch(addDeck(newDeck))
-        //     console.log(newDeck, "DISPATCH")
-        // })
         
         navigation.navigate('DeckList', {key: title})
         this.setState({ title: ' ' })
     }
-    // clearQuery = () => {
-    //     this.setState({ title: '' })
-    // }
 
     render () {
         return (
@@ -130,7 +121,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-    console.log(state, 'ADD DECK    ')
+    console.log(state, 'ADD DECK')
     return { decks: state }
 }
 
