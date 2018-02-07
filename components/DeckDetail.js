@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { white, orange, gray, lightPurp } from '../utils/colors'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native'
+import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue, greyLight } from '../utils/colors'
 import { saveDeckTitle, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
@@ -15,43 +15,86 @@ function SubmitButton ({ onPress }) {
     )
 }
 
-function DeckDetail(props) {
-    console.log(props, "DETAIL")
-    const { navigation, deck, cards } = props;
-    const cardCount = deck.cards.length;
-    console.log(deck, '???')
-    return (
-      <View>
-        <Text style={styles.title}>{deck.title}</Text>
-        <Text style={styles.subtitle}>
-          {`${cardCount} cards`}
-        </Text>
-        <TouchableOpacity style={styles.Btn}
-          onPress={() => navigation.navigate('AddCard', { key: deck.title })}
-        >
-          <Text style={styles.BtnText}>Add Card</Text>
-        </TouchableOpacity>
-        {/* {
-          cardCount === 0 && */}
-            <TouchableOpacity style={styles.Btn}
-              onPress={() => {
-                // Reset notification since a quiz was started
-                clearNotification().then(setNotification);
-                navigation.navigate('StartQuiz', { key: deck.title });
-              }}
-            >
-              <Text style={styles.BtnText}>Start Quiz</Text>
-            </TouchableOpacity>
-        {/* } */}
-      </View>
-    );
+
+class DeckDetail extends React.Component {
+  constructor(props) {
+    super(props)
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true
+  }
+  _renderItem = ({ item, index }) => {
+    console.log(item, index,'index')
+    return (
+        <View style={styles.cardList}>
+          <Text># {index + 1}</Text>
+          <Text style={styles.type}>Question:</Text>
+          <Text style={styles.text}>{item.question}</Text>
+          <Text style={styles.type}>Answer:</Text>
+          <Text style={styles.text}>{item.answer}</Text>
+        </View>
+      )
+  }
+  render() {
+    const { navigation, deck, cards } = this.props
+    const cardCount = deck.cards.length
+    console.log(deck.cards, 'cards')
+    return (
+      <View style={styles.container}>
+        <View style={styles.deck}>
+          <Text style={styles.title}>{deck.title}</Text>
+          <Text style={styles.count}>
+            {`${cardCount} cards`}
+          </Text>
+        </View>
+        <View style={styles.add}>
+          <TouchableOpacity style={styles.Btn}
+            onPress={() => navigation.navigate('AddCard', { key: deck.title })}
+          >
+            <Text style={styles.BtnText}>Add Card</Text>
+          </TouchableOpacity>
+        {
+          cardCount !== 0 &&
+          <TouchableOpacity style={styles.Btn}
+            onPress={() => {
+              // Reset notification since a quiz was started
+              clearNotification().then(setNotification);
+              navigation.navigate('StartQuiz', { key: deck.title });
+            }}
+          >
+            <Text style={styles.BtnText}>Start Quiz</Text>
+          </TouchableOpacity>
+        }
+        </View>
+        <FlatList
+          data={Object.values(deck.cards)}
+          extraData={this.state}
+          renderItem={this._renderItem}
+          keyExtractor={item => item.question}
+        />
+      </View>
+    )
+  }
+}
 
 const styles=StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 40,
-        backgroundColor: orange
+        backgroundColor: greyLight
+    },
+    deck: {
+        padding: 25,
+        margin: 10,
+        borderColor: white,
+        borderRadius: 7,
+        borderWidth: 1,
+        backgroundColor: yellowStrong
+    },
+    card: {
+      margin: 20,
+      borderColor: gray,
+      backgroundColor: white
     },
     row: {
         flexDirection: 'row',
@@ -59,10 +102,16 @@ const styles=StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        textAlign:'center',
-        fontSize: 22,
-        padding: 20,
-        
+      textAlign:'center',
+      fontSize: 28,
+      padding: 20,
+      color: blue
+    },
+    count: {
+      textAlign:'center',
+      fontSize: 22,
+      padding: 20,
+      color: greenBlue
     },
     subtitle: {
         paddingTop: 40,
@@ -70,33 +119,48 @@ const styles=StyleSheet.create({
         fontSize: 18,
         textAlign: 'center'
     },
+    add: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center'
+    },
     Btn: {
-        backgroundColor: lightPurp,
-        padding: 5,
+        backgroundColor: greenLight,
+        paddingTop: 10,
+        paddingBottom: 2,
+        paddingLeft: 5,
+        paddingRight: 5,
         borderRadius: 7,
-        height: 45,
-        margin: 50
+        height: 50,
+        margin: 10
     },
     BtnText: {
-        color: white,
+        color: blue,
         fontSize: 22,
         textAlign: 'center'
     },
+    cardList: {
+      padding: 20,
+      margin: 20,
+      backgroundColor: white,
+      borderColor: gray,
+    },
+    type: {
+      fontWeight: 'bold',
+      fontSize: 18
+    },
+    text: {
+      marginBottom: 10,
+      fontSize: 16
+    }
 })
 
-// const mapStateToProps = (state, ownProps) => {
-//     console.log(ownProps, '!!!!')
-//     return { 
-//         decktitle: ownProps.navigation.state.params.title,
-//         cardCount: ownProps.navigation.state.params.cardCount
-//     }
-//   }
 
   const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
     console.log(state[key], 'DECK!!!!')
     return { deck: state[key] }
-    
+
   }
-  
+
   export default connect(mapStateToProps)(DeckDetail)

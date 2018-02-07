@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { white, orange, gray } from '../utils/colors'
+import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
 import { saveDeckTitle, createDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
@@ -39,12 +39,12 @@ class AddDeck extends React.Component {
         const newDeck = {
             [title]: {
                 title: title,
-                cards: [],
+                cards: []
             },
         }
 
         createDeck(newDeck).then(this.props.addDeck(newDeck))
-        
+
         navigation.navigate('DeckList', {key: title})
         this.setState({ title: ' ' })
     }
@@ -53,13 +53,15 @@ class AddDeck extends React.Component {
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>ADD NEW DECK</Text>
-                <Text style={styles.subtitle}>Enter a Title for your new Deck:</Text>
-                <TextInput 
-                    style={styles.input}
-                    placeholder="Title"
-                    value={this.state.title}
-                    onChangeText={this.handleTextChange}
-                />
+                <View style={styles.deck}>
+                    <Text style={styles.subtitle}>Decktitle:</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Title"
+                        value={this.state.title}
+                        onChangeText={this.handleTextChange}
+                    />
+                </View>
                 <SubmitButton onPress={this.handleSubmit} />
             </View>
         )
@@ -69,7 +71,7 @@ class AddDeck extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 40,
+        paddingTop: 40,
         backgroundColor: white
     },
     row: {
@@ -78,18 +80,22 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
+        backgroundColor: blue,
+        borderRadius: 5,
         textAlign:'center',
-        fontSize: 22,
+        fontSize: 28,
         padding: 20,
-        marginTop: 40
+        color: white
     },
     subtitle: {
-        paddingTop: 40,
-        paddingBottom: 20,
-        fontSize: 18
+        textAlign:'center',
+        fontSize: 28,
+        padding: 20,
+        color: blue,
+        fontWeight: 'bold'
     },
     iosSubmitBtn: {
-        backgroundColor: orange,
+        backgroundColor: greenLight,
         padding: 10,
         borderRadius: 7,
         height: 45,
@@ -108,14 +114,22 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         marginRight: 30
     },
+    deck: {
+        padding: 45,
+        margin: 10,
+        borderColor: white,
+        borderRadius: 7,
+        borderWidth: 1,
+        backgroundColor: yellowStrong
+    },
     input: {
-        height: 40,
-        borderColor: gray,
+        height: 50,
+        borderColor: blue,
         borderRadius: 7,
         borderWidth: 1,
         paddingLeft: 20,
         marginBottom: 50,
-        color: gray
+        color: blue
 
     }
 })

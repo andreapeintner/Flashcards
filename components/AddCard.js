@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
-import { white, orange, gray } from '../utils/colors'
+import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
 import { addCardToDeck, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addCard, receiveDecks } from '../actions'
@@ -17,7 +17,6 @@ function SubmitButton ({ onPress }) {
 class AddCard extends React.Component {
 
     state = {
-        // title: this.props.navigation.state.params.decktitle,
         question: '',
         answer: ''
     }
@@ -31,7 +30,7 @@ class AddCard extends React.Component {
     }
 
     handleSubmit = () => {
-        
+
         const { question, answer } = this.state
         const { deck, navigation } = this.props
         console.log(deck, 'UFFFFaaaaa')
@@ -50,8 +49,7 @@ class AddCard extends React.Component {
             )
         } else {
             console.log(deck, card, 'STTAE add card')
-            addCardToDeck(deck, card).then(this.props.addCard(deck, card));
-            
+            addCardToDeck(card, deck).then(this.props.addCard(card, deck));
             // TODO: navigate to quiz view??
             navigation.goBack()
         }
@@ -95,7 +93,6 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize: 22,
         padding: 20,
-        marginTop: 40
     },
     subtitle: {
         paddingTop: 40,
@@ -103,8 +100,9 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     iosSubmitBtn: {
-        backgroundColor: orange,
+        backgroundColor: greenLight,
         padding: 10,
+        marginTop: 20,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         borderWidth: 1,
         paddingLeft: 20,
-        marginBottom: 50,
+        marginBottom: 10,
         color: gray
 
     }
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
     return { deck: state[key] }
-    
+
   }
 
 

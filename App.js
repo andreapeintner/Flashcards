@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, StatusBar } from 'react-native'
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
-import { white, orange, gray, purple } from './utils/colors'
+import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from './utils/colors'
 import Constants from 'expo'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { createStore } from 'redux'
@@ -66,7 +66,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple,
+        backgroundColor: blue,
       }
     }
   },
@@ -75,7 +75,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: orange,
+        backgroundColor: blue,
       }
     }
   },
@@ -84,7 +84,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: orange,
+        backgroundColor: blue,
       }
     }
   }
@@ -96,7 +96,7 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(reducer)}>
         <View style={styles.container}>
-          <UdaciStatusBar backgroundColor={orange} barStyle='light-content' />
+          <UdaciStatusBar backgroundColor={yellowStrong} barStyle='light-content' />
           <MainNavigator />
         </View>
       </Provider>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
       fontSize: 18
   },
   iosSubmitBtn: {
-      backgroundColor: orange,
+      backgroundColor: yellowStrong,
       padding: 10,
       borderRadius: 7,
       height: 45,
