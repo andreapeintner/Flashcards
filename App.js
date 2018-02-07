@@ -7,7 +7,6 @@ import { TabNavigator, StackNavigator } from 'react-navigation'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducer'
-// import actions from './actions'
 
 import AddDeck from './components/AddDeck'
 import DeckList from './components/DeckList'

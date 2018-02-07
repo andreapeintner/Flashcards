@@ -4,6 +4,7 @@ import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yel
 import { saveDeckTitle, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
+import { Ionicons, FontAwesome } from '@expo/vector-icons'
 
 
 function SubmitButton ({ onPress }) {
@@ -42,6 +43,14 @@ class DeckDetail extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
+          <View style={styles.icons}>
+            <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
+                <FontAwesome name='pencil' size={25} color={blue} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
+              <Ionicons name='ios-trash' size={25} color={blue} />
+            </TouchableOpacity>
+          </View>
           <Text style={styles.title}>{deck.title}</Text>
           <Text style={styles.count}>
             {`${cardCount} cards`}
@@ -152,6 +161,14 @@ const styles=StyleSheet.create({
     text: {
       marginBottom: 10,
       fontSize: 16
+    },
+    icons: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'flex-end'
+    },
+    icon: {
+      marginRight: 10
     }
 })
 
