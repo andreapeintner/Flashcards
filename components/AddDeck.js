@@ -30,8 +30,8 @@ class AddDeck extends React.Component {
 
         if (!title) {
             Alert.alert(
-            'Required data missing',
-            'Please provide a deck title before submitting.',
+                'Error',
+                'Please insert a deck title before you submit.',
             )
             return false
         }

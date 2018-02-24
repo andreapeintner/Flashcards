@@ -1,8 +1,8 @@
-import { RECEIVE_DECKS, ADD_DECK, ADD_CARD } from '../actions'
+import { RECEIVE_DECKS, ADD_DECK, ADD_CARD, QUIZ_DATE } from '../actions'
 
 function decks(state = {}, action) {
-    console.log(state)
-    console.log(action)
+    console.log(state, 'state reducer')
+    console.log(action, 'action reducer')
     switch (action.type) {
         case RECEIVE_DECKS :
             return {
@@ -22,6 +22,14 @@ function decks(state = {}, action) {
                     cards: [...state[action.deck.title].cards, action.card]
                 }
             }
+        case QUIZ_DATE:
+            return {
+              ...state,
+                [action.deck.title]: {
+                    ...state[action.deck.title],
+                    QuizDone: action.date
+                }
+            };
         default :
             return state
     }

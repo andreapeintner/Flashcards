@@ -20,7 +20,7 @@ class DeckList extends React.Component {
     }
     _keyExtractor = (item, index) => item.id
     _renderItem = ({ item }) => {
-        const cardCount = item.cards.length
+        // const cardCount = item.cards.length
         const { navigation } = this.props
         return (
             <View>
@@ -29,7 +29,7 @@ class DeckList extends React.Component {
                   navigation.navigate('DeckDetail', { key: item.title }))}
               >
                 <Text style={styles.listItemText}>{item.title}</Text>
-                <Text style={styles.listItemCount}>{`(${cardCount} cards)`}</Text>
+                {/* <Text style={styles.listItemCount}>{`(${cardCount} cards)`}</Text> */}
               </TouchableOpacity>
             </View>
           )
@@ -96,6 +96,7 @@ const styles=StyleSheet.create({
 
 
 const mapStateToProps = state => {
+    console.log(state, '/////')
     return {
         decks: state
     }

@@ -45,9 +45,9 @@ class DeckDetail extends React.Component {
         <View style={styles.deck}>
           <View style={styles.icons}>
             <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
-                <FontAwesome name='pencil' size={25} color={blue} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
+              <FontAwesome name='pencil' size={25} color={blue} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
               <Ionicons name='ios-trash' size={25} color={blue} />
             </TouchableOpacity>
           </View>
@@ -67,8 +67,8 @@ class DeckDetail extends React.Component {
           <TouchableOpacity style={styles.Btn}
             onPress={() => {
               // Reset notification since a quiz was started
-              clearNotification().then(setNotification);
-              navigation.navigate('StartQuiz', { key: deck.title });
+              // clearNotification().then(setNotification)
+              navigation.navigate('Quiz', { key: deck.title })
             }}
           >
             <Text style={styles.BtnText}>Start Quiz</Text>
