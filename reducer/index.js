@@ -22,14 +22,14 @@ function decks(state = {}, action) {
                     cards: [...state[action.deck.title].cards, action.card]
                 }
             }
-        case QUIZ_DATE:
-            return {
-              ...state,
-                [action.deck.title]: {
-                    ...state[action.deck.title],
-                    QuizDone: action.date
-                }
-            };
+        // case QUIZ_DATE:
+        //     return {
+        //       ...state,
+        //         [action.deck.title]: {
+        //             ...state[action.deck.title],
+        //             QuizDone: action.date
+        //         }
+        //     };
         default :
             return state
     }

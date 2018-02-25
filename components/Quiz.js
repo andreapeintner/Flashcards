@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
 import { gray, white, pink, greenStrong, orange, greenLight, greenBlue, yellowLight, yellowStrong, red, blue, greyLight } from '../utils/colors'
 import { connect } from 'react-redux'
 import { Ionicons, FontAwesomem, Entypo } from '@expo/vector-icons'
@@ -8,12 +8,15 @@ import { dateQuizTaken } from '../utils/api'
 import { quizDone } from '../actions'
 
 class Quiz extends React.Component {
-    state = {
-        actualCard: 0,
-        cardsNumber: this.props.deck.cards.length,
-        rightAnswer: 0,
-        showAnswer: false,
-        quizDone: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            actualCard: 0,
+            cardsNumber: this.props.deck.cards.length,
+            rightAnswer: 0,
+            showAnswer: false,
+            finishedQuiz: false
+        }
     }
     resetQuiz = () => {
         this.setState({
@@ -21,7 +24,7 @@ class Quiz extends React.Component {
           cardsNumber: this.props.deck.cards.length,
           rightAnswer: 0,
           showAnswer: false,
-          quizDone: false
+          finishedQuiz: false
         })
     }
     turnCard = () => {
@@ -31,11 +34,12 @@ class Quiz extends React.Component {
         this.state.actualCard === this.state.cardsNumber - 1
 
     completeQuiz = () => {
-        const { deck } = this.props
-        const quizDate = Date.now()
+        // const { deck } = this.props
+        // console.log(deck, 'KKKKK')
+        // const quizDate = Date.now()
     
-        //dateQuizTaken(quizDate).then(this.props.quizDone(deck, quizDate))
-
+        // dateQuizTaken(deck, quizDate).then(this.props.quizDone(deck, quizDate))
+        console.log(clearLocalNotification, setLocalNotification, 'notifi')
         clearLocalNotification().then(setLocalNotification())
     }
     answerCorrect = () => {
@@ -43,7 +47,7 @@ class Quiz extends React.Component {
           ? this.setState(
               state => ({
                 rightAnswer: state.rightAnswer + 1,
-                quizDone: true
+                finishedQuiz: true
               }),
               () => this.completeQuiz()
             )
@@ -57,7 +61,7 @@ class Quiz extends React.Component {
         this.isFinalQuestion()
           ? this.setState(
               state => ({
-                quizDone: true
+                finishedQuiz: true
               }),
               () => this.completeQuiz()
             )
@@ -72,15 +76,16 @@ class Quiz extends React.Component {
             cardsNumber,
             rightAnswer,
             showAnswer,
-            quizDone
+            finishedQuiz
           } = this.state
           const { deck } = this.props
       
           const cardsRemaining = cardsNumber - (actualCard + 1)
           const score = rightAnswer / cardsNumber * 100
       
-        return !quizDone ? (
-            <View>
+        return !finishedQuiz ? (
+            <View style={{flex: 1}}>
+            <ScrollView>
                 <Text style={styles.title}>{deck.title} - Quiz</Text>
                 <Text style={styles.questionNr}>
                     {cardsRemaining === 0
@@ -102,11 +107,34 @@ class Quiz extends React.Component {
                         <Text style={styles.btnText}>Wrong</Text>
                     </TouchableOpacity>
                 </View>
+                </ScrollView>
             </View>
         ) : score == 100 ? (
             <View title={`${deck.title} Quiz - Your Score`}>
                 <Text style={styles.didIt}>
-                    You did it! You answerd every question correctly.
+                    😎
+                    {"\n"}
+                    You did it!
+                    {"\n"}
+                    You answerd every question correctly!
+                    {"\n"}
+                    Well Done and keep learning!
+                </Text>
+                <View style={styles.add}>
+                    <TouchableOpacity style={styles.DoneBtn} onPress={() => this.props.navigation.goBack()}>
+                        <Text style={styles.DoneBtnText}> Back to Deck </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.DoneBtn} onPress={() => this.resetQuiz()}>
+                        <Text style={styles.DoneBtnText}> Restart Quiz</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        ) : score < 25 ? (
+            <View title={`${deck.title} Quiz - Your Score`}>
+                <Text style={styles.nearlyDidIt}>
+                    🙁 Your score is ({score.toFixed(0)}%). 
+                    {"\n"}
+                    You'll do better next time!
                 </Text>
                 <View style={styles.add}>
                     <TouchableOpacity style={styles.DoneBtn} onPress={() => this.props.navigation.goBack()}>
@@ -141,12 +169,12 @@ class Quiz extends React.Component {
 
 const styles=StyleSheet.create({
     title: {
-        backgroundColor: yellowStrong,
+        backgroundColor: orange,
         borderRadius: 5,
         textAlign:'center',
         fontSize: 28,
         padding: 20,
-        color: blue
+        color: white
     },
     questionNr: {
         padding: 20,
@@ -157,25 +185,26 @@ const styles=StyleSheet.create({
     questAnsw: {
         borderWidth: 1,
         borderColor: blue,
+        borderRadius: 7,
         padding: 40,
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: 20,
         margin: 20,
         fontStyle: 'italic'
     },
     turnCard: {
         marginBottom: 50,
-        marginTop: 20,
+        marginTop: 10,
         marginLeft: 60,
         marginRight: 60,
-        backgroundColor: yellowLight,
-        height: 40,
+        backgroundColor: greenLight,
+        height: 50,
         padding: 10,
         borderRadius: 7,
     },
     turnCardText: {
         color: blue,
-        fontSize: 18,
+        fontSize: 20,
         textAlign: 'center'
     },
     add: {
@@ -191,7 +220,8 @@ const styles=StyleSheet.create({
         paddingRight: 5,
         borderRadius: 7,
         height: 50,
-        margin: 20
+        margin: 20,
+        width: 100
     },
     btnWrong: {
         backgroundColor: red,
@@ -201,7 +231,8 @@ const styles=StyleSheet.create({
         paddingRight: 5,
         borderRadius: 7,
         height: 50,
-        margin: 20
+        margin: 20,
+        width: 100
     },
     btnText: {
         color: white,
@@ -217,7 +248,7 @@ const styles=StyleSheet.create({
         color: white
     },
     nearlyDidIt: {
-        backgroundColor: orange,
+        backgroundColor: red,
         borderRadius: 5,
         textAlign:'center',
         fontSize: 28,

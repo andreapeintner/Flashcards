@@ -39,14 +39,14 @@ export const addCardToDeck = (card, deck) => {
     )
 }
 
-export const dateQuizTaken = (deck, date) =>
-    AsyncStorage.mergeItem(
-        STORAGE_DECKS_KEY, JSON.stringify({
-            [deck.title]: { 
-                QuizDone: date 
-            }
-        })
-    )
+// export const dateQuizTaken = (deck, date) =>
+//     AsyncStorage.mergeItem(
+//         STORAGE_DECKS_KEY, JSON.stringify({
+//             [deck.title]: { 
+//                 lastDateQuizTaken: date 
+//             }
+//         })
+//     )
 
 export const resetDecks = () =>
   AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(getDecksInfo))

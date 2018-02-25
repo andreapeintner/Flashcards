@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
 import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
 import { addCardToDeck, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addCard, receiveDecks } from '../actions'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function SubmitButton ({ onPress }) {
     return (
@@ -33,7 +34,6 @@ class AddCard extends React.Component {
 
         const { question, answer } = this.state
         const { deck, navigation } = this.props
-        console.log(deck, 'UFFFFaaaaa')
         const card = { question: question, answer: answer }
 
 
@@ -48,8 +48,7 @@ class AddCard extends React.Component {
                 "Please fill in the answer"
             )
         } else {
-            console.log(deck, card, 'STTAE add card')
-            addCardToDeck(card, deck).then(this.props.addCard(card, deck));
+            addCardToDeck(card, deck).then(this.props.addCard(card, deck))
             // TODO: navigate to quiz view??
             navigation.goBack()
         }
@@ -58,22 +57,30 @@ class AddCard extends React.Component {
     render () {
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>ADD NEW CARD</Text>
-                <Text style={styles.subtitle}>Enter a question</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Question"
-                    onChangeText={this.changeQuestion}
-                />
-                <Text style={styles.subtitle}>Enter the answer</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Answer"
-                    onChangeText={this.changeAnswer}
-                />
-                <SubmitButton onPress={this.handleSubmit} />
+            <KeyboardAwareScrollView
+                style={{ backgroundColor: '#fff' }}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                scrollEnabled={true}
+            >
+            <View style={{flex: 1}}>
+                <ScrollView style={styles.container}>
+                    <Text style={styles.title}>ADD NEW CARD</Text>
+                    <Text style={styles.subtitle}>Enter a question</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Question"
+                        onChangeText={this.changeQuestion}
+                    />
+                    <Text style={styles.subtitle}>Enter the answer</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Answer"
+                        onChangeText={this.changeAnswer}
+                    />
+                    <SubmitButton onPress={this.handleSubmit} />
+                </ScrollView>
             </View>
+            </KeyboardAwareScrollView>
         )
     }
 }

@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { addDeck } from '../actions'
 import { Ionicons, FontAwesome } from '@expo/vector-icons'
 
-
 function SubmitButton ({ onPress }) {
     return (
         <TouchableOpacity onPress={onPress}
@@ -67,7 +66,6 @@ class DeckDetail extends React.Component {
           <TouchableOpacity style={styles.Btn}
             onPress={() => {
               // Reset notification since a quiz was started
-              // clearNotification().then(setNotification)
               navigation.navigate('Quiz', { key: deck.title })
             }}
           >
@@ -89,16 +87,23 @@ class DeckDetail extends React.Component {
 const styles=StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 40,
         backgroundColor: greyLight
     },
     deck: {
-        padding: 25,
+        padding: 10,
         margin: 10,
         borderColor: white,
         borderRadius: 7,
         borderWidth: 1,
         backgroundColor: yellowStrong
+    },
+    icons: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'flex-end'
+    },
+    icon: {
+      marginRight: 10
     },
     card: {
       margin: 20,
@@ -162,14 +167,6 @@ const styles=StyleSheet.create({
       marginBottom: 10,
       fontSize: 16
     },
-    icons: {
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-end'
-    },
-    icon: {
-      marginRight: 10
-    }
 })
 
 
