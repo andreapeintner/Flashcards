@@ -1,7 +1,6 @@
 export const RECEIVE_DECKS = 'RECEIVE_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const ADD_CARD = 'ADD_CARD'
-// export const QUIZ_DATE = 'QUIZ_DATE'
 
 export function receiveDecks (decks) {
     return {
@@ -22,11 +21,3 @@ export function addCard (card, deck) {
         deck
     }
 }
-
-// export function quizDate (date, deck) {
-//     return {
-//         type: QUIZ_DATE,
-//         date,
-//         deck
-//     }
-// }

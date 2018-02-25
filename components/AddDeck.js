@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
         backgroundColor: yellowStrong
     },
     input: {
+        backgroundColor: white,
         height: 50,
         borderColor: blue,
         borderRadius: 7,
@@ -135,7 +136,6 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = state => {
-    console.log(state, 'ADD DECK')
     return { decks: state }
 }
 

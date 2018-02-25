@@ -24,7 +24,6 @@ class DeckDetail extends React.Component {
     return true
   }
   _renderItem = ({ item, index }) => {
-    console.log(item, index,'index')
     return (
         <View style={styles.cardList}>
           <Text># {index + 1}</Text>
@@ -172,7 +171,6 @@ const styles=StyleSheet.create({
 
   const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
-    console.log(state[key], 'DECK!!!!')
     return { deck: state[key] }
 
   }

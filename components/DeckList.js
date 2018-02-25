@@ -36,7 +36,6 @@ class DeckList extends React.Component {
     }
     render () {
         const { decks, navigation } = this.props
-        console.log(decks, 'DECKSSSSS')
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>DeckList</Text>
@@ -96,7 +95,6 @@ const styles=StyleSheet.create({
 
 
 const mapStateToProps = state => {
-    console.log(state, '/////')
     return {
         decks: state
     }

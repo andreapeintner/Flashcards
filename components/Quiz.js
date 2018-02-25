@@ -34,12 +34,6 @@ class Quiz extends React.Component {
         this.state.actualCard === this.state.cardsNumber - 1
 
     completeQuiz = () => {
-        // const { deck } = this.props
-        // console.log(deck, 'KKKKK')
-        // const quizDate = Date.now()
-    
-        // dateQuizTaken(deck, quizDate).then(this.props.quizDone(deck, quizDate))
-        console.log(clearLocalNotification, setLocalNotification, 'notifi')
         clearLocalNotification().then(setLocalNotification())
     }
     answerCorrect = () => {
@@ -274,7 +268,6 @@ const styles=StyleSheet.create({
 
 const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
-    console.log(state[key], 'Quiz')
     return { deck: state[key] }
 
   }
