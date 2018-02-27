@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
+import { white, greenLight, yellowStrong, blue } from '../utils/colors'
 import { saveDeckTitle, createDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
@@ -40,7 +40,7 @@ class AddDeck extends React.Component {
             [title]: {
                 title: title,
                 cards: []
-            },
+            }
         }
 
         createDeck(newDeck).then(this.props.addDeck(newDeck))

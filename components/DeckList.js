@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList, Button } from 'react-native'
-import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Button } from 'react-native'
+import { white, greenBlue, yellowStrong, blue } from '../utils/colors'
 import { getDeck, resetDecks } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { getDecksInfo } from '../utils/helpers'
@@ -11,7 +11,8 @@ class DeckList extends React.Component {
 
     componentDidMount() {
         getDeck().then(decks => (
-            this.props.receiveDecks(decks)))
+            this.props.receiveDecks(decks)
+        ))
     }
 
     resetSubmit = () => {
@@ -20,7 +21,7 @@ class DeckList extends React.Component {
     }
     _keyExtractor = (item, index) => item.id
     _renderItem = ({ item }) => {
-        // const cardCount = item.cards.length
+        const cardCount = item.cards.length
         const { navigation } = this.props
         return (
             <View>
@@ -29,7 +30,7 @@ class DeckList extends React.Component {
                   navigation.navigate('DeckDetail', { key: item.title }))}
               >
                 <Text style={styles.listItemText}>{item.title}</Text>
-                {/* <Text style={styles.listItemCount}>{`(${cardCount} cards)`}</Text> */}
+                <Text style={styles.listItemCount}>{`(cards: ${cardCount})`}</Text>
               </TouchableOpacity>
             </View>
           )

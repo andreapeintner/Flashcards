@@ -1,11 +1,9 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Button } from 'react-native'
-import { gray, white, pink, greenStrong, orange, greenLight, greenBlue, yellowLight, yellowStrong, red, blue, greyLight } from '../utils/colors'
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { white, greenStrong, orange, greenLight, greenBlue, yellowLight, red, blue } from '../utils/colors'
 import { connect } from 'react-redux'
 import { Ionicons, FontAwesomem, Entypo } from '@expo/vector-icons'
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
-import { dateQuizTaken } from '../utils/api'
-import { quizDone } from '../actions'
 
 class Quiz extends React.Component {
     constructor(props) {
@@ -73,34 +71,34 @@ class Quiz extends React.Component {
             finishedQuiz
           } = this.state
           const { deck } = this.props
-      
+
           const cardsRemaining = cardsNumber - (actualCard + 1)
           const score = rightAnswer / cardsNumber * 100
-      
+
         return !finishedQuiz ? (
             <View style={{flex: 1}}>
-            <ScrollView>
-                <Text style={styles.title}>{deck.title} - Quiz</Text>
-                <Text style={styles.questionNr}>
-                    {cardsRemaining === 0
-                        ? 'Last Question'
-                        : `${actualCard + 1} / ${cardsNumber}`
-                    }
-                </Text>
-                <Text style={styles.questAnsw}>
-                    { showAnswer ? deck.cards[actualCard].answer : deck.cards[actualCard].question }
-                </Text>
-                <TouchableOpacity style={styles.turnCard} onPress={() => this.turnCard()}>
-                    <Text style={styles.turnCardText}>{showAnswer ? 'Show Question' : 'Show Answer'}</Text>
-                </TouchableOpacity>
-                <View style={styles.add}>
-                    <TouchableOpacity style={styles.btn} onPress={() => this.answerCorrect()}>
-                        <Text style={styles.btnText}>Right</Text>
+                <ScrollView>
+                    <Text style={styles.title}>{deck.title} - Quiz</Text>
+                    <Text style={styles.questionNr}>
+                        {cardsRemaining === 0
+                            ? 'Last Question'
+                            : `${actualCard + 1} / ${cardsNumber}`
+                        }
+                    </Text>
+                    <Text style={styles.questAnsw}>
+                        { showAnswer ? deck.cards[actualCard].answer : deck.cards[actualCard].question }
+                    </Text>
+                    <TouchableOpacity style={styles.turnCard} onPress={() => this.turnCard()}>
+                        <Text style={styles.turnCardText}>{showAnswer ? 'Show Question' : 'Show Answer'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.btnWrong} onPress={() => this.answerIncorrect()}>
-                        <Text style={styles.btnText}>Wrong</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.add}>
+                        <TouchableOpacity style={styles.btn} onPress={() => this.answerCorrect()}>
+                            <Text style={styles.btnText}>Right</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.btnWrong} onPress={() => this.answerIncorrect()}>
+                            <Text style={styles.btnText}>Wrong</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </View>
         ) : score == 100 ? (
@@ -126,7 +124,7 @@ class Quiz extends React.Component {
         ) : score < 25 ? (
             <View title={`${deck.title} Quiz - Your Score`}>
                 <Text style={styles.nearlyDidIt}>
-                    🙁 Your score is ({score.toFixed(0)}%). 
+                    🙁 Your score is ({score.toFixed(0)}%).
                     {"\n"}
                     You'll do better next time!
                 </Text>
@@ -142,7 +140,7 @@ class Quiz extends React.Component {
         ) : (
             <View title={`${deck.title} Quiz - Your Score`}>
                 <Text style={styles.nearlyDidIt}>
-                    Well done! Your score is ({score.toFixed(0)}%). 
+                    Well done! Your score is ({score.toFixed(0)}%).
                     {"\n"}
                     You answered {rightAnswer} out of {cardsNumber} correctly.
                     {"\n"}{"\n"}

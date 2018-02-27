@@ -32,24 +32,19 @@ export const getDecksInfo = {
     }
 }
 
-// export function getDailyReminderValue () {
-//     return {
-//       today: "👋 Don't forget to check your knowledge today"
-//     }
-//   }
 
-export function timeToString (time = Date.now()) {
-    const date = new Date(time)
-    const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
-    return todayUTC.toISOString().split('T')[0]
-}
+// export function timeToString (time = Date.now()) {
+//     const date = new Date(time)
+//     const todayUTC = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()))
+//     return todayUTC.toISOString().split('T')[0]
+// }
 
 export function clearLocalNotification() {
     return AsyncStorage.removeItem(DAILY_REMINDER).then(
         Notifications.cancelAllScheduledNotificationsAsync
     )
 }
-  
+
 function createNotification() {
     return {
         title: "👋 Don't forget to Quiz yourself today!",
@@ -59,7 +54,7 @@ function createNotification() {
         },
     }
 }
-  
+
 export function setLocalNotification() {
     AsyncStorage.getItem(DAILY_REMINDER)
         .then(JSON.parse)
@@ -68,12 +63,12 @@ export function setLocalNotification() {
                 Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
                 if (status === 'granted') {
                     Notifications.cancelAllScheduledNotificationsAsync()
-    
+
                     let tomorrow = new Date()
                     tomorrow.setDate(tomorrow.getDate() + 1)
                     tomorrow.setHours(20)
                     tomorrow.setMinutes(0)
-        
+
                     Notifications.scheduleLocalNotificationAsync(createNotification(), {
                         time: tomorrow,
                         repeat: 'day'

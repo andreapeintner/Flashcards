@@ -1,6 +1,6 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, AsyncStorage } from 'react-native'
-import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue } from '../utils/colors'
+import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
+import { gray, white, greenLight } from '../utils/colors'
 import { addCardToDeck, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addCard, receiveDecks } from '../actions'
@@ -31,11 +31,9 @@ class AddCard extends React.Component {
     }
 
     handleSubmit = () => {
-
         const { question, answer } = this.state
         const { deck, navigation } = this.props
         const card = { question: question, answer: answer }
-
 
         if(!question) {
             Alert.alert(
@@ -49,7 +47,6 @@ class AddCard extends React.Component {
             )
         } else {
             addCardToDeck(card, deck).then(this.props.addCard(card, deck))
-            // TODO: navigate to quiz view??
             navigation.goBack()
         }
     }
@@ -58,12 +55,11 @@ class AddCard extends React.Component {
 
         return (
             <KeyboardAwareScrollView
-                style={{ backgroundColor: '#fff' }}
+                style={{ backgroundColor: white }}
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 scrollEnabled={true}
             >
-            <View style={{flex: 1}}>
-                <ScrollView style={styles.container}>
+                <View style={styles.container}>
                     <Text style={styles.title}>ADD NEW CARD</Text>
                     <Text style={styles.subtitle}>Enter a question</Text>
                     <TextInput
@@ -78,8 +74,7 @@ class AddCard extends React.Component {
                         onChangeText={this.changeAnswer}
                     />
                     <SubmitButton onPress={this.handleSubmit} />
-                </ScrollView>
-            </View>
+                </View>
             </KeyboardAwareScrollView>
         )
     }

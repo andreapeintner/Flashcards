@@ -1,6 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native'
-import { gray, white, pink, greenStrong, greenLight, greenBlue, yellowLight, yellowStrong, blue, greyLight } from '../utils/colors'
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native'
+import { gray, white, greenLight, greenBlue, yellowStrong, blue, greyLight } from '../utils/colors'
 import { saveDeckTitle, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
@@ -14,7 +14,6 @@ function SubmitButton ({ onPress }) {
         </TouchableOpacity>
     )
 }
-
 
 class DeckDetail extends React.Component {
   constructor(props) {
@@ -41,17 +40,17 @@ class DeckDetail extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
-          <View style={styles.icons}>
+          {/* <View style={styles.icons}>
             <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
               <FontAwesome name='pencil' size={25} color={blue} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
               <Ionicons name='ios-trash' size={25} color={blue} />
             </TouchableOpacity>
-          </View>
+          </View> */}
           <Text style={styles.title}>{deck.title}</Text>
           <Text style={styles.count}>
-            {`${cardCount} cards`}
+            {`cards: ${cardCount}`}
           </Text>
         </View>
         <View style={styles.add}>
@@ -64,7 +63,6 @@ class DeckDetail extends React.Component {
           cardCount !== 0 &&
           <TouchableOpacity style={styles.Btn}
             onPress={() => {
-              // Reset notification since a quiz was started
               navigation.navigate('Quiz', { key: deck.title })
             }}
           >
@@ -89,8 +87,8 @@ const styles=StyleSheet.create({
         backgroundColor: greyLight
     },
     deck: {
-        padding: 10,
-        margin: 10,
+        padding: 5,
+        margin: 5,
         borderColor: white,
         borderRadius: 7,
         borderWidth: 1,
@@ -160,11 +158,11 @@ const styles=StyleSheet.create({
     },
     type: {
       fontWeight: 'bold',
-      fontSize: 18
+      fontSize: 20
     },
     text: {
       marginBottom: 10,
-      fontSize: 16
+      fontSize: 18
     },
 })
 
