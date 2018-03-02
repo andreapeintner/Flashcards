@@ -36,7 +36,7 @@ class DeckList extends React.Component {
           )
     }
     render () {
-        const { decks, navigation } = this.props
+        const { decks } = this.props
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>DeckList</Text>

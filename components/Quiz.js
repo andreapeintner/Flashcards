@@ -18,11 +18,11 @@ class Quiz extends React.Component {
     }
     resetQuiz = () => {
         this.setState({
-          actualCard: 0,
-          cardsNumber: this.props.deck.cards.length,
-          rightAnswer: 0,
-          showAnswer: false,
-          finishedQuiz: false
+            actualCard: 0,
+            cardsNumber: this.props.deck.cards.length,
+            rightAnswer: 0,
+            showAnswer: false,
+            finishedQuiz: false
         })
     }
     turnCard = () => {
@@ -31,36 +31,36 @@ class Quiz extends React.Component {
     isFinalQuestion = () =>
         this.state.actualCard === this.state.cardsNumber - 1
 
-    completeQuiz = () => {
-        clearLocalNotification().then(setLocalNotification())
-    }
     answerCorrect = () => {
         this.isFinalQuestion()
           ? this.setState(
-              state => ({
-                rightAnswer: state.rightAnswer + 1,
-                finishedQuiz: true
-              }),
-              () => this.completeQuiz()
+                state => ({
+                    rightAnswer: state.rightAnswer + 1,
+                    finishedQuiz: true
+                }),
+                () => this.completeQuiz()
             )
           : this.setState(state => ({
-              actualCard: state.actualCard + 1,
-              rightAnswer: state.rightAnswer + 1,
-              showAnswer: false
+                actualCard: state.actualCard + 1,
+                rightAnswer: state.rightAnswer + 1,
+                showAnswer: false
         }))
     }
     answerIncorrect = () => {
         this.isFinalQuestion()
-          ? this.setState(
-              state => ({
+        ? this.setState (
+            state => ({
                 finishedQuiz: true
-              }),
-              () => this.completeQuiz()
-            )
-          : this.setState(state => ({
-              actualCard: state.actualCard + 1,
-              showAnswer: false
+            }),
+            () => this.completeQuiz()
+        )
+        : this.setState(state => ({
+            actualCard: state.actualCard + 1,
+            showAnswer: false
         }))
+    }
+    completeQuiz = () => {
+        clearLocalNotification().then(setLocalNotification())
     }
     render() {
         const {
@@ -69,11 +69,11 @@ class Quiz extends React.Component {
             rightAnswer,
             showAnswer,
             finishedQuiz
-          } = this.state
-          const { deck } = this.props
+        } = this.state
+        const { deck } = this.props
 
-          const cardsRemaining = cardsNumber - (actualCard + 1)
-          const score = rightAnswer / cardsNumber * 100
+        const cardsRemaining = cardsNumber - (actualCard + 1)
+        const score = rightAnswer / cardsNumber * 100
 
         return !finishedQuiz ? (
             <View style={{flex: 1}}>
@@ -103,7 +103,7 @@ class Quiz extends React.Component {
             </View>
         ) : score == 100 ? (
             <View title={`${deck.title} Quiz - Your Score`}>
-                <Text style={styles.didIt}>
+                <Text style={styles.fullScore}>
                     😎
                     {"\n"}
                     You did it!
@@ -123,7 +123,7 @@ class Quiz extends React.Component {
             </View>
         ) : score < 25 ? (
             <View title={`${deck.title} Quiz - Your Score`}>
-                <Text style={styles.nearlyDidIt}>
+                <Text style={styles.littleScore}>
                     🙁 Your score is ({score.toFixed(0)}%).
                     {"\n"}
                     You'll do better next time!
@@ -139,7 +139,7 @@ class Quiz extends React.Component {
             </View>
         ) : (
             <View title={`${deck.title} Quiz - Your Score`}>
-                <Text style={styles.nearlyDidIt}>
+                <Text style={styles.inbetweenScore}>
                     Well done! Your score is ({score.toFixed(0)}%).
                     {"\n"}
                     You answered {rightAnswer} out of {cardsNumber} correctly.
@@ -231,7 +231,7 @@ const styles=StyleSheet.create({
         fontSize: 22,
         textAlign: 'center'
     },
-    didIt: {
+    fullScore: {
         backgroundColor: greenStrong,
         borderRadius: 5,
         textAlign:'center',
@@ -239,7 +239,15 @@ const styles=StyleSheet.create({
         padding: 20,
         color: white
     },
-    nearlyDidIt: {
+    inbetweenScore: {
+        backgroundColor: orange,
+        borderRadius: 5,
+        textAlign:'center',
+        fontSize: 28,
+        padding: 20,
+        color: white
+    },
+    littleScore: {
         backgroundColor: red,
         borderRadius: 5,
         textAlign:'center',
