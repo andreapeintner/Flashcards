@@ -40,14 +40,6 @@ class DeckDetail extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.deck}>
-          {/* <View style={styles.icons}>
-            <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
-              <FontAwesome name='pencil' size={25} color={blue} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.icon} onPress={() => navigation.navigate('AddDeck', { key: deck.title })}>
-              <Ionicons name='ios-trash' size={25} color={blue} />
-            </TouchableOpacity>
-          </View> */}
           <Text style={styles.title}>{deck.title}</Text>
           <Text style={styles.count}>
             {`cards: ${cardCount}`}

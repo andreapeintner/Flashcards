@@ -60,7 +60,8 @@ class Quiz extends React.Component {
         }))
     }
     completeQuiz = () => {
-        clearLocalNotification().then(setLocalNotification())
+        clearLocalNotification()
+            .then(setLocalNotification)
     }
     render() {
         const {
