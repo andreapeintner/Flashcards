@@ -11,22 +11,30 @@ This App was tested on the iOS Platform
 ## Runnig App
 
 1. Clone, fork or download this repo
-2. cd into directory
-3. run 
+2. Cd into directory
+3. Run 
     ```
-    npm install
-    # or
     yarn install
+    #or
+    npm install
     ```
-4. run
+4. Run
     ```
-    npm start
-    # or
     yarn start
+    #or
+    npm start
     ```
 5. Download the Expo App on your mobile phone or install the iOS Simulator on your machine
 6. From the Expo App on your mobile phone scan the QR code that appears in the terminal. If you want the app to run on the simulator on your machine, press "i" in your terminal
 7. The App will start with a small dataset, you can add content to that or reset the App back to this sample data.
+
+### Tools and Frameworks used
+
+* [Redux](https://redux.js.org/)
+* [React Navigation](https://reactnavigation.org/)
+* [React Native Flip Card](https://github.com/moschan/react-native-flip-card)
+* [Expo Vector Icons](https://expo.github.io/vector-icons/)
+* [Keyboard Aware Scrollview](https://github.com/APSL/react-native-keyboard-aware-scroll-view)
 
 ### Networking
 
