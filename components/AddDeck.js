@@ -131,12 +131,9 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         marginBottom: 50,
         color: blue
-
     }
 })
 
-const mapStateToProps = state => {
-    return { decks: state }
-}
+const mapStateToProps = decks => ({ decks })
 
 export default connect(mapStateToProps, {addDeck})(AddDeck)
