@@ -75,16 +75,16 @@ class DeckDetail extends React.Component {
 
 const styles=StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: greyLight
+      flex: 1,
+      backgroundColor: greyLight
     },
     deck: {
-        padding: 5,
-        margin: 5,
-        borderColor: white,
-        borderRadius: 7,
-        borderWidth: 1,
-        backgroundColor: yellowStrong
+      padding: 5,
+      margin: 5,
+      borderColor: white,
+      borderRadius: 7,
+      borderWidth: 1,
+      backgroundColor: yellowStrong
     },
     icons: {
       flexDirection: 'row',
@@ -100,9 +100,9 @@ const styles=StyleSheet.create({
       backgroundColor: white
     },
     row: {
-        flexDirection: 'row',
-        flex: 1,
-        alignItems: 'center'
+      flexDirection: 'row',
+      flex: 1,
+      alignItems: 'center'
     },
     title: {
       textAlign:'center',
@@ -117,10 +117,10 @@ const styles=StyleSheet.create({
       color: greenBlue
     },
     subtitle: {
-        paddingTop: 40,
-        paddingBottom: 20,
-        fontSize: 18,
-        textAlign: 'center'
+      paddingTop: 40,
+      paddingBottom: 20,
+      fontSize: 18,
+      textAlign: 'center'
     },
     add: {
       flexDirection: 'row',
@@ -128,19 +128,19 @@ const styles=StyleSheet.create({
       justifyContent: 'center'
     },
     Btn: {
-        backgroundColor: greenLight,
-        paddingTop: 10,
-        paddingBottom: 2,
-        paddingLeft: 5,
-        paddingRight: 5,
-        borderRadius: 7,
-        height: 50,
-        margin: 10
+      backgroundColor: greenLight,
+      paddingTop: 10,
+      paddingBottom: 2,
+      paddingLeft: 5,
+      paddingRight: 5,
+      borderRadius: 7,
+      height: 50,
+      margin: 10
     },
     BtnText: {
-        color: blue,
-        fontSize: 22,
-        textAlign: 'center'
+      color: blue,
+      fontSize: 22,
+      textAlign: 'center'
     },
     cardList: {
       padding: 20,
@@ -155,7 +155,7 @@ const styles=StyleSheet.create({
     text: {
       marginBottom: 10,
       fontSize: 18
-    },
+    }
 })
 
 

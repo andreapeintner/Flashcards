@@ -2,16 +2,13 @@
   "expo": {
     "sdkVersion": "23.0.0",
     "orientation": "portrait",
-    "name": "Mobile Flashcards",
-    "description": "Check your Knowledge daily",
-    "slug": "mobile-flachcards",
+    "name": "Flashcards",
+    "description": "How much do you know?",
+    "slug": "Flaschcards",
     "version": "1.0",
     "icon": "flashcards.png",
-    "ios": {
-      "bundleIdentifier": "org.mobile-flashcards.exp"
-    },
-    "android": {
-      "package": "org.mobile-flashcards.exp"
+    "notification": {
+      "icon": "flashcards.png"
     }
   }
 }

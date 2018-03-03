@@ -136,8 +136,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state, ownProps) => {
     const { key } = ownProps.navigation.state.params
     return { deck: state[key] }
-
-  }
+}
 
 
 export default connect(mapStateToProps, {addCard})(AddCard)
