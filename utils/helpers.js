@@ -39,7 +39,7 @@ export function clearLocalNotification() {
     )
 }
 
-function createNotification() {
+const createNotification = () => {
     return {
         title: "👋 Don't forget to Quiz yourself today!",
         body: 'Everyday practice will help you remeber your flashcards in notime',
