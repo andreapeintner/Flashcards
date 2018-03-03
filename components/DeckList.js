@@ -85,12 +85,14 @@ const styles=StyleSheet.create({
         color: greenBlue
     },
     deck: {
-        padding: 45,
+        padding: 28,
         margin: 10,
-        borderColor: white,
         borderRadius: 7,
-        borderWidth: 1,
-        backgroundColor: yellowStrong
+        backgroundColor: yellowStrong,
+        shadowColor: blue,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 5,
     }
 })
 

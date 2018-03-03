@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { white, greenLight, yellowStrong, blue } from '../utils/colors'
+import { gray, white, greenLight, yellowStrong, blue } from '../utils/colors'
 import { saveDeckTitle, createDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
@@ -8,8 +8,8 @@ import { addDeck } from '../actions'
 function SubmitButton ({ onPress }) {
     return (
         <TouchableOpacity onPress={onPress}
-            style={styles.iosSubmitBtn}>
-            <Text style={styles.submitBtnText}>SUBMIT</Text>
+            style={styles.submitBtn}>
+            <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
     )
 }
@@ -52,7 +52,7 @@ class AddDeck extends React.Component {
     render () {
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>ADD NEW DECK</Text>
+                <Text style={styles.title}>New Deck</Text>
                 <View style={styles.deck}>
                     <Text style={styles.subtitle}>Decktitle:</Text>
                     <TextInput
@@ -91,19 +91,22 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize: 28,
         padding: 20,
-        color: blue,
-        fontWeight: 'bold'
+        color: blue
     },
-    iosSubmitBtn: {
+    submitBtn: {
         backgroundColor: greenLight,
         padding: 10,
         borderRadius: 7,
         height: 45,
         marginLeft: 40,
         marginRight: 40,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     },
     submitBtnText: {
-        color: white,
+        color: blue,
         fontSize: 22,
         textAlign: 'center'
     },
@@ -117,20 +120,25 @@ const styles = StyleSheet.create({
     deck: {
         padding: 45,
         margin: 10,
-        borderColor: white,
         borderRadius: 7,
-        borderWidth: 1,
-        backgroundColor: yellowStrong
+        backgroundColor: yellowStrong,
+        shadowColor: blue,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 5,
     },
     input: {
         backgroundColor: white,
-        height: 50,
-        borderColor: blue,
+        height: 60,
+        fontSize: 20,
         borderRadius: 7,
-        borderWidth: 1,
         paddingLeft: 20,
         marginBottom: 50,
-        color: blue
+        color: blue,
+        shadowColor: blue,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     }
 })
 

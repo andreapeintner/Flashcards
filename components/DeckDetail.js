@@ -135,7 +135,11 @@ const styles=StyleSheet.create({
       paddingRight: 5,
       borderRadius: 7,
       height: 50,
-      margin: 10
+      margin: 10,
+      shadowColor: gray,
+      shadowOffset: {width:1, height:1},
+      shadowOpacity: 2,
+      shadowRadius: 2,
     },
     BtnText: {
       color: blue,
@@ -147,6 +151,10 @@ const styles=StyleSheet.create({
       margin: 20,
       backgroundColor: white,
       borderColor: gray,
+      shadowColor: gray,
+      shadowOffset: {width:1, height:1},
+      shadowOpacity: 2,
+      shadowRadius: 5,
     },
     type: {
       fontWeight: 'bold',

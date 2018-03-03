@@ -1,6 +1,6 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
-import { gray, white, greenLight } from '../utils/colors'
+import { blue, gray, white, greenLight, yellowLight } from '../utils/colors'
 import { addCardToDeck, getDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addCard, receiveDecks } from '../actions'
@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 function SubmitButton ({ onPress }) {
     return (
         <TouchableOpacity onPress={onPress}
-            style={styles.iosSubmitBtn}>
+            style={styles.submitBtn}>
             <Text style={styles.submitBtnText}>SUBMIT</Text>
         </TouchableOpacity>
     )
@@ -59,20 +59,22 @@ class AddCard extends React.Component {
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 scrollEnabled={true}
             >
-                <View style={styles.container}>
-                    <Text style={styles.title}>ADD NEW CARD</Text>
-                    <Text style={styles.subtitle}>Enter a question</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Question"
-                        onChangeText={this.changeQuestion}
-                    />
-                    <Text style={styles.subtitle}>Enter the answer</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Answer"
-                        onChangeText={this.changeAnswer}
-                    />
+                <View>
+                    <Text style={styles.title}>New Card</Text>
+                    <View style={styles.cardContainer}>
+                        <Text style={styles.subtitle}>Enter a question:</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Question"
+                            onChangeText={this.changeQuestion}
+                        />
+                        <Text style={styles.subtitle}>Enter the answer:</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Answer"
+                            onChangeText={this.changeAnswer}
+                        />
+                    </View>
                     <SubmitButton onPress={this.handleSubmit} />
                 </View>
             </KeyboardAwareScrollView>
@@ -81,27 +83,33 @@ class AddCard extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 40,
-        backgroundColor: white
-    },
     row: {
         flexDirection: 'row',
         flex: 1,
         alignItems: 'center'
     },
     title: {
+        backgroundColor: yellowLight,
+        borderRadius: 5,
         textAlign:'center',
-        fontSize: 22,
+        fontSize: 28,
         padding: 20,
+        color: blue
+    },
+    cardContainer: {
+        padding: 30,
+        borderColor: gray,
+        borderWidth: 1,
+        margin: 20,
+        shadowColor: blue,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 5,
     },
     subtitle: {
-        paddingTop: 40,
-        paddingBottom: 20,
         fontSize: 18
     },
-    iosSubmitBtn: {
+    submitBtn: {
         backgroundColor: greenLight,
         padding: 10,
         marginTop: 20,
@@ -109,9 +117,13 @@ const styles = StyleSheet.create({
         height: 45,
         marginLeft: 40,
         marginRight: 40,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 1,
     },
     submitBtnText: {
-        color: white,
+        color: blue,
         fontSize: 22,
         textAlign: 'center'
     },
@@ -123,14 +135,19 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     input: {
-        height: 40,
+        height: 50,
+        fontSize: 20,
         borderColor: gray,
         borderRadius: 7,
         borderWidth: 1,
         paddingLeft: 20,
-        marginBottom: 10,
-        color: gray
-
+        marginBottom: 20,
+        marginTop: 10,
+        color: gray,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     }
 })
 const mapStateToProps = (state, ownProps) => {
