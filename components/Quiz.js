@@ -1,9 +1,10 @@
 import React from 'react'
 import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { white, greenStrong, orange, greenLight, greenBlue, yellowLight, red, blue } from '../utils/colors'
+import { white, greenStrong, orange, greenLight, greenBlue, yellowLight, red, blue, yellowStrong, gray } from '../utils/colors'
 import { connect } from 'react-redux'
 import { Ionicons, FontAwesomem, Entypo } from '@expo/vector-icons'
 import { setLocalNotification, clearLocalNotification } from '../utils/helpers'
+import FlipCard from 'react-native-flip-card'
 
 class Quiz extends React.Component {
     constructor(props) {
@@ -13,7 +14,8 @@ class Quiz extends React.Component {
             cardsNumber: this.props.deck.cards.length,
             rightAnswer: 0,
             showAnswer: false,
-            finishedQuiz: false
+            finishedQuiz: false,
+            flip: false
         }
     }
     resetQuiz = () => {
@@ -21,12 +23,8 @@ class Quiz extends React.Component {
             actualCard: 0,
             cardsNumber: this.props.deck.cards.length,
             rightAnswer: 0,
-            showAnswer: false,
             finishedQuiz: false
         })
-    }
-    turnCard = () => {
-        this.setState(state => ({ showAnswer: !state.showAnswer }))
     }
     isFinalQuestion = () =>
         this.state.actualCard === this.state.cardsNumber - 1
@@ -43,7 +41,7 @@ class Quiz extends React.Component {
           : this.setState(state => ({
                 actualCard: state.actualCard + 1,
                 rightAnswer: state.rightAnswer + 1,
-                showAnswer: false
+                flip: false
         }))
     }
     answerIncorrect = () => {
@@ -56,7 +54,7 @@ class Quiz extends React.Component {
         )
         : this.setState(state => ({
             actualCard: state.actualCard + 1,
-            showAnswer: false
+            flip: false
         }))
     }
     completeQuiz = () => {
@@ -86,11 +84,28 @@ class Quiz extends React.Component {
                             : `${actualCard + 1} / ${cardsNumber}`
                         }
                     </Text>
-                    <Text style={styles.questAnsw}>
-                        { showAnswer ? deck.cards[actualCard].answer : deck.cards[actualCard].question }
-                    </Text>
-                    <TouchableOpacity style={styles.turnCard} onPress={() => this.turnCard()}>
-                        <Text style={styles.turnCardText}>{showAnswer ? 'Show Question' : 'Show Answer'}</Text>
+                    <FlipCard
+                        style={styles.flipCard}
+                        friction={5}
+                        perspective={1000}
+                        flipHorizontal={true}
+                        flipVertical={false}
+                        flip={this.state.flip}
+                        clickable={true}
+                    >
+                        <View>
+                            <Text style={styles.questAnsw}>
+                                {deck.cards[actualCard].question}
+                            </Text>
+                        </View>
+                        <View>
+                            <Text style={styles.questAnsw}>
+                                {deck.cards[actualCard].answer}
+                            </Text>
+                        </View>
+                    </FlipCard>
+                    <TouchableOpacity style={styles.turnCard} onPress={()=>{this.setState({flip: !this.state.flip})}}>
+                        <Text style={styles.turnCardText}>{this.state.flip ? 'Show Question' : 'Show Answer'}</Text>
                     </TouchableOpacity>
                     <View style={styles.add}>
                         <TouchableOpacity style={styles.btn} onPress={() => this.answerCorrect()}>
@@ -176,24 +191,33 @@ const styles=StyleSheet.create({
         color: greenBlue,
     },
     questAnsw: {
-        borderWidth: 1,
-        borderColor: blue,
-        borderRadius: 7,
         padding: 40,
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 24,
         margin: 20,
         fontStyle: 'italic'
     },
+    flipCard: {
+        backgroundColor: yellowStrong,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 5,
+        borderColor: yellowStrong
+    },
     turnCard: {
         marginBottom: 50,
-        marginTop: 10,
+        marginTop: 30,
         marginLeft: 60,
         marginRight: 60,
         backgroundColor: greenLight,
         height: 50,
         padding: 10,
         borderRadius: 7,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     },
     turnCardText: {
         color: blue,
@@ -214,7 +238,11 @@ const styles=StyleSheet.create({
         borderRadius: 7,
         height: 50,
         margin: 20,
-        width: 100
+        width: 100,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     },
     btnWrong: {
         backgroundColor: red,
@@ -225,7 +253,11 @@ const styles=StyleSheet.create({
         borderRadius: 7,
         height: 50,
         margin: 20,
-        width: 100
+        width: 100,
+        shadowColor: gray,
+        shadowOffset: {width:1, height:1},
+        shadowOpacity: 2,
+        shadowRadius: 2,
     },
     btnText: {
         color: white,
