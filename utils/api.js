@@ -36,5 +36,6 @@ export const addCardToDeck = (card, deck) => {
     )
 }
 
-export const resetDecks = () =>
-  AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(getDecksInfo))
+//for testing:
+// export const resetDecks = () =>
+//     AsyncStorage.setItem(STORAGE_DECKS_KEY, JSON.stringify(getDecksInfo))

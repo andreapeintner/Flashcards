@@ -1,10 +1,13 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Button } from 'react-native'
 import { white, greenBlue, yellowStrong, blue } from '../utils/colors'
-import { getDeck, resetDecks } from '../utils/api'
+import { getDeck } from '../utils/api'
 import { receiveDecks } from '../actions'
 import { getDecksInfo } from '../utils/helpers'
 import { connect } from 'react-redux'
+
+// for testing
+//import { resetDecks } from '../utils/api'
 
 
 class DeckList extends React.Component {
@@ -16,7 +19,8 @@ class DeckList extends React.Component {
     }
 
     resetSubmit = () => {
-        resetDecks();
+        // for testing
+        // resetDecks()
         getDeck().then(decks => this.props.receiveDecks(decks));
     }
     _keyExtractor = (item, index) => item.id
@@ -39,15 +43,16 @@ class DeckList extends React.Component {
         const { decks } = this.props
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>DeckList</Text>
+                <Text style={styles.title}>Deck Overview</Text>
                 <FlatList
                     data={Object.values(decks)}
                     extraData={this.state}
                     renderItem={this._renderItem}
                     keyExtractor={item => item.title}
                 />
-                <Button title="Reset Sample Data" onPress={() => this.resetSubmit()} />
-            </View>
+                {/* for testing:*/}
+                {/* <Button title="Reset Sample Data" onPress={() => this.resetSubmit()} />  */}
+             </View>
         )
     }
 }
