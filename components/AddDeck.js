@@ -4,6 +4,7 @@ import { gray, white, greenLight, yellowStrong, blue } from '../utils/colors'
 import { saveDeckTitle, createDeck } from '../utils/api'
 import { connect } from 'react-redux'
 import { addDeck } from '../actions'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 function SubmitButton ({ onPress }) {
     return (
@@ -51,19 +52,25 @@ class AddDeck extends React.Component {
 
     render () {
         return (
-            <View style={styles.container}>
-                <Text style={styles.title}>New Deck</Text>
-                <View style={styles.deck}>
-                    <Text style={styles.subtitle}>Decktitle:</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Title"
-                        value={this.state.title}
-                        onChangeText={this.handleTextChange}
-                    />
+            <KeyboardAwareScrollView
+                style={{ backgroundColor: white }}
+                resetScrollToCoords={{ x: 0, y: 0 }}
+                scrollEnabled={true}
+            >
+                <View style={styles.container}>
+                    <Text style={styles.title}>New Deck</Text>
+                    <View style={styles.deck}>
+                        <Text style={styles.subtitle}>Decktitle:</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Title"
+                            value={this.state.title}
+                            onChangeText={this.handleTextChange}
+                        />
+                    </View>
+                    <SubmitButton onPress={this.handleSubmit} />
                 </View>
-                <SubmitButton onPress={this.handleSubmit} />
-            </View>
+            </KeyboardAwareScrollView>
         )
     }
 }
