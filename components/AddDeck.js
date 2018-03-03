@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         height: 45,
         marginLeft: 40,
         marginRight: 40,
+        marginTop: 20,
         shadowColor: gray,
         shadowOffset: {width:1, height:1},
         shadowOpacity: 2,
