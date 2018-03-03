@@ -45,7 +45,7 @@ class AddDeck extends React.Component {
 
         createDeck(newDeck).then(this.props.addDeck(newDeck))
 
-        navigation.navigate('DeckList', {key: title})
+        navigation.navigate('DeckDetail', { key: title })
         this.setState({ title: ' ' })
     }
 
